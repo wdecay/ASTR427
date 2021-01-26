@@ -6,9 +6,22 @@ Ubuntu. To build the code, run
 $ make
 #+END_EXAMPLE
 That will produce 3 executables called ~problem1~, ~problem2~ and
-~problem3~.
+~problem3~. The output of each of them will be provided below for
+reference. Implementation-specific comments are included with the
+code, whereas general and conceptual questions and answered here.
 
 * 1. Floating point representation
+The output of ~problem1~:
+#+BEGIN_EXAMPLE
+(a) 5.96046448E-08, 00110011100000000000000000000000
+(b) 1.19209290E-07, 00110100000000000000000000000000
+(c) 3.19014719E+38, 01111111011100000000000000000000
+(d) 1.40129846E-45, 00000000000000000000000000000001
+ Fortran's HUGE and TINY REAL numbers:    3.40282347E+38   1.17549435E-38
+Note: The following floating-point exceptions are signalling: IEEE_OVERFLOW_FLAG IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+#+END_EXAMPLE
+
+
 * 2. Roundoff error
 * 3. Interpolation
  [[./interpolation.png]]
