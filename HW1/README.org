@@ -1,10 +1,14 @@
 * General notes
-The code follows the Fortran 2003 standard. I was tested using the
-~GNU Fortran 9.3.0~ compiler on Ubuntu. To build the code, run
+The code follows the Fortran 2003 standard and can be found in the
+~.f03~ files. It was tested using the ~GNU Fortran 9.3.0~ compiler on
+Ubuntu. To build the code, run
 #+BEGIN_EXAMPLE
 $ make
 #+END_EXAMPLE
-This will produce 3 executables called ~problem1~, ~problem2~ and
+That will produce 3 executables called ~problem1~, ~problem2~ and
 ~problem3~.
 
+* 1. Floating point representation
+* 2. Roundoff error
+* 3. Interpolation
  [[./interpolation.png]]
