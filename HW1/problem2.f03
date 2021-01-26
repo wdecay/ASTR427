@@ -12,6 +12,8 @@ PROGRAM roundoff_error
      WRITE(*, "(E15.10,F15.10)") x, expr(x)
   END DO
 
+  WRITE(*, "(B0.64)") COS(1d-8)
+
   STOP
   
 CONTAINS 
@@ -21,6 +23,8 @@ CONTAINS
   FUNCTION expr(x)
     REAL(kind=8) :: expr, x
     expr = (1 - COS(x)) / x**2
+    ! This fixes the issue:
+    ! expr = 2*(SIN(x/2)/x)**2
   END FUNCTION expr
   
 END PROGRAM roundoff_error

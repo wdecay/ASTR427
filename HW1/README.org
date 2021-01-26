@@ -27,8 +27,8 @@ following format (from MSB TO LSB):
 - (E)xponent (8 bits)
 - (M)antissa (23 bits)
 
-The number itself is (-1)^S(1.M)^(E-127), where the leading one in the
-mantissa is implicit. This means that ~1.0~ is represented as
+The number itself is ~(-1)^S(1.M)^(E-127)~, where the leading one in
+the mantissa is implicit. This means that ~1.0~ is represented as
 ~0|01111111|00000000000000000000000~ in binary.
 ** Part (a)
 The largest 32-bit floating-point number smaller than ~1.0~ is
@@ -40,7 +40,7 @@ predecessor to be ~01111111~, then its fraction will be
 ~0.1111111111111111111111(1)~ with the last ~1~ extending beyond the
 designated 23 bits. Subtracting ~0.1111111111111111111111(1)~ from
 ~1.00000000000000000000000(0)~ in binary gives
-~0.00000000000000000000000(1)~, or 2^(-24), which is exactly
+~0.00000000000000000000000(1)~, or ~2^(-24)~, which is exactly
 ~5.96046447754e-8~. The CPU can carry out this operation.
 
 ** Part (b)
@@ -53,10 +53,10 @@ The maximum number will have its mantissa filled out with ~1s~ and the
 highest possible exponent. Note that even though the former is not the
 case according to the output above, the result is still the maxinum
 representable number "to better than a factor of 2." (See more
-comments in the source code.)
+comments in the source file.)
 
 The standard defines the maximum binary exponent to be 127, which is
-the case in the output: $254-127 = 127$. The exponent could be larger
+the case in the output: ~254-127 = 127~. The exponent could be larger
 by one, but theb standard reserves the extra bit for other purposes
 such as, for instance, identifying infinities.
 ** Part (d)
@@ -70,7 +70,7 @@ reserves the extra bit for other purposes (like repbresenting
 subnormal numbers).
 
 Smallest and greatest numbers can typically be queried using
-appropriate API (like the $TINY$ and $HUGE$ functions in Fortran).
+appropriate API (like the ~TINY~ and ~HUGE~ functions in Fortran).
 
 Note: the output of this program can vary wildly depending on the
 compiler optimization settings. Fortran's compiler optimizes its
@@ -106,5 +106,15 @@ easily verified using the L'Hôpital's rule. The numerical value was
 initially near the analytical limit, then started diverging from it
 and eventually dropped to 0.
 
+To the lowest non-zero order in $x$, $cos(x) = 1 - x**2/2$. As $x$
+gets close to $1e-8$, the terms in the Taylor series become smaller
+than the machine epsilon which was explored in the previous exercise
+(except here we deal with ~float64~ and the machine epsilon is of the
+order ~1e-16~). When this happens, $cos(x)$ is truncated to 1 and the
+numerator of the expression becomes zero. Hence the unexpected result.
+
+This problem can be fixed by rewriting the expression as
+~2*(sin(x/2)/x)**2~. This way, the precision will not be lost in the
+numerator and the result will agree with the analytical limit.
 * 3. Interpolation
  [[./interpolation.png]]
