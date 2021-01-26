@@ -1,1 +1,10 @@
-[[./interpolation.png]]
+* General notes
+The code follows the Fortran 2003 standard. I was tested using the
+~GNU Fortran 9.3.0~ compiler on Ubuntu. To build the code, run
+#+BEGIN_EXAMPLE
+$ make
+#+END_EXAMPLE
+This will produce 3 executables called ~problem1~, ~problem2~ and
+~problem3~.
+
+ [[./interpolation.png]]
