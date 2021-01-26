@@ -1,3 +1,5 @@
+! Problem 2: Roundoff error
+!
 PROGRAM roundoff_error
   IMPLICIT NONE
 
@@ -13,7 +15,9 @@ PROGRAM roundoff_error
   STOP
   
 CONTAINS 
-  
+
+  ! Returns the value of (1-cos(x))/x**2 in double precision
+  !
   FUNCTION expr(x)
     REAL(kind=8) :: expr, x
     expr = (1 - COS(x)) / x**2

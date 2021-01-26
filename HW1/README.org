@@ -21,7 +21,90 @@ The output of ~problem1~:
 Note: The following floating-point exceptions are signalling: IEEE_OVERFLOW_FLAG IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
 #+END_EXAMPLE
 
+According to IEEE754, the 32-bin floating point numbers have the
+following format (from MSB TO LSB):
+- (S)ign (1 bit)
+- (E)xponent (8 bits)
+- (M)antissa (23 bits)
 
+The number itself is (-1)^S(1.M)^(E-127), where the leading one in the
+mantissa is implicit. This means that ~1.0~ is represented as
+~0|01111111|00000000000000000000000~ in binary.
+** Part (a)
+The largest 32-bit floating-point number smaller than ~1.0~ is
+~0|01111110|11111111111111111111111~. This is the number we should
+expect when the machine epsilon is subtracted from ~1.0~. Thus the
+machine epsilon in this case is the difference between ~1.0~ and its
+largest predecessor. If we imagine the exponent of the largest
+predecessor to be ~01111111~, then its fraction will be
+~0.1111111111111111111111(1)~ with the last ~1~ extending beyond the
+designated 23 bits. Subtracting ~0.1111111111111111111111(1)~ from
+~1.00000000000000000000000(0)~ in binary gives
+~0.00000000000000000000000(1)~, or 2^(-24), which is exactly
+~5.96046447754e-8~. The CPU can carry out this operation.
+
+** Part (b)
+It is easy to see that the smallest number greater than one which can
+be represented according to the standard is
+~0|01111111|00000000000000000000001~. Subtracting ~1.0~ from this
+number gives 2^(-23), which is exactly ~1.19209289551e-7~.
+** Part (c)
+The maximum number will have its mantissa filled out with ~1s~ and the
+highest possible exponent. Note that even though the former is not the
+case according to the output above, the result is still the maxinum
+representable number "to better than a factor of 2." (See more
+comments in the source code.)
+
+The standard defines the maximum binary exponent to be 127, which is
+the case in the output: $254-127 = 127$. The exponent could be larger
+by one, but theb standard reserves the extra bit for other purposes
+such as, for instance, identifying infinities.
+** Part (d)
+Here the program return as subnormal number with a zero exponent and
+zero implicit first bit of the mantissa. Subnormal numbers are also
+defined by the standard, but their use can be dangerous and should be
+avoided. The smallest "normal" number is ~1.17549435E-38~ who
+representation in binary is ~00000000100000000000000000000000~. Here
+again the exponent could've been smaller by one, but the standard
+reserves the extra bit for other purposes (like repbresenting
+subnormal numbers).
+
+Smallest and greatest numbers can typically be queried using
+appropriate API (like the $TINY$ and $HUGE$ functions in Fortran).
+
+Note: the output of this program can vary wildly depending on the
+compiler optimization settings. Fortran's compiler optimizes its
+output quite aggressively for best performance.
 * 2. Roundoff error
+The output of ~problem2~:
+#+BEGIN_EXAMPLE
+              X              Y
+.2000000000E-06   0.4996003611
+.1000000000E-06   0.4996003611
+.6666666667E-07   0.4996003611
+.5000000000E-07   0.4884981308
+.4000000000E-07   0.4857225733
+.3333333333E-07   0.4996003611
+.2857142857E-07   0.5440092821
+.2500000000E-07   0.5329070518
+.2222222222E-07   0.4496403250
+.2000000000E-07   0.5551115123
+.1818181818E-07   0.3358424649
+.1666666667E-07   0.3996802889
+.1538461538E-07   0.4690692279
+.1428571429E-07   0.5440092821
+.1333333333E-07   0.6245004514
+.1250000000E-07   0.7105427358
+.1176470588E-07   0.8021361353
+.1111111111E-07   0.8992806499
+.1052631579E-07   0.0000000000
+.1000000000E-07   0.0000000000
+#+END_EXAMPLE
+
+The limit of ~(1-cos(x))/x**2~ at ~x -> 0~ is ~1/2~, which can be
+easily verified using the L'Hôpital's rule. The numerical value was
+initially near the analytical limit, then started diverging from it
+and eventually dropped to 0.
+
 * 3. Interpolation
  [[./interpolation.png]]

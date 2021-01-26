@@ -14,6 +14,7 @@ PROGRAM empirical_real_numbers
   r = min_positive_real()
   WRITE(*, fmt=fmt) '(d)', r, ', ', r
   PRINT *, 'Fortran''s HUGE and TINY REAL numbers: ', HUGE(0.0), TINY(0.0)
+
   STOP
   
 CONTAINS 
@@ -66,7 +67,7 @@ CONTAINS
   !   This will produce a subnormal number
   !   (https://en.wikipedia.org/wiki/Denormal_number) and trigger
   !   floating-point exceptions IEEE_OVERFLOW_FLAG, IEEE_UNDERFLOW_FLAG and
-  !   IEEE_DENORMAL, which Fortran will report upon exit.
+  !   IEEE_DENORMAL, which Fortran will report upon exit, unless suppressed.
   !   
   FUNCTION min_positive_real()
     REAL :: min_positive_real, seed = 1.0
