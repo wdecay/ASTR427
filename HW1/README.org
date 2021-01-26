@@ -106,11 +106,11 @@ easily verified using the L'Hôpital's rule. The numerical value was
 initially near the analytical limit, then started diverging from it
 and eventually dropped to 0.
 
-To the lowest non-zero order in $x$, $cos(x) = 1 - x**2/2$. As $x$
-gets close to $1e-8$, the terms in the Taylor series become smaller
+To the lowest non-zero order in ~x~, ~cos(x) = 1 - x**2/2~. As ~x~
+gets close to ~1e-8~, the terms in the Taylor series become smaller
 than the machine epsilon which was explored in the previous exercise
 (except here we deal with ~float64~ and the machine epsilon is of the
-order ~1e-16~). When this happens, $cos(x)$ is truncated to 1 and the
+order ~1e-16~). When this happens, ~cos(x)~ is truncated to 1 and the
 numerator of the expression becomes zero. Hence the unexpected result.
 
 This problem can be fixed by rewriting the expression as
