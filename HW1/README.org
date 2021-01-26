@@ -117,4 +117,12 @@ This problem can be fixed by rewriting the expression as
 ~2*(sin(x/2)/x)**2~. This way, the precision will not be lost in the
 numerator and the result will agree with the analytical limit.
 * 3. Interpolation
+The output of ~problem3~:
+#+BEGIN_EXAMPLE
+ Enter x
+4.75
+ Actual value:            4.4321329639889200     
+ Linear interpolation:    4.5625000000000000     
+ Neville's algorithm:     2.9516602099609379
+#+END_EXAMPLE
  [[./interpolation.png]]

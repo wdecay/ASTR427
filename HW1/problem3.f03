@@ -50,8 +50,8 @@ CONTAINS
     REAL(kind=8), INTENT(in) :: x
     INTEGER :: idx, l, r, m
 
-    l = 1
-    r = SIZE(this%data, 1)
+    l = 1                       ! beginning index and
+    r = SIZE(this%data, 1)      ! end index in the data set
 
     ! Edge cases
     IF (this%data(l, 1) > x .OR. this%data(r, 1) < x) THEN
@@ -124,13 +124,13 @@ CONTAINS
 
     ! WARNING: it is assumed here that the input is evenly
     ! spaced in the independent variable
-    shift = (this%n + 1)/ 2
+    shift = (this%n + 1) / 2
     
     ! edge cases
     IF (this%n + 1 > SIZE(this%data, 1)) THEN
        ERROR STOP "Not enough points for interpolation."
     END IF
-
+    
     IF (idx == -1 .AND. x > this%data(1, 1)) idx = SIZE(this%data, 1)
     
     IF (idx - shift <= 0) shift = idx - 1
@@ -139,7 +139,6 @@ CONTAINS
     END IF
 
     idx = idx - shift
-
 
     ! initialization of P, C and D
     DO i=1, this%n + 1
@@ -204,11 +203,11 @@ PROGRAM interpolation_demo
   REAL(kind=8), dimension(:, :), allocatable, TARGET :: tbl
   REAL(kind=8) :: x
   INTEGER :: status
-  type(LinearInterpolation) :: lin_interp
-  type(NevilleInterpolation) :: nev_interp
+  TYPE(LinearInterpolation) :: lin_interp
+  TYPE(NevilleInterpolation) :: nev_interp
 
   CALL load_data('hw1_data.txt', tbl)
-  write (*,*) 'Enter x'
+  WRITE(*,*) 'Enter x'
   READ *, x
 
   PRINT *, "Actual value:         ", 100 / x**2
@@ -222,7 +221,7 @@ PROGRAM interpolation_demo
   ! gnuplot isn't installed, no big deal.
   
   OPEN(10, file="tabulation.txt")
-  x = 0.5
+  x = 0.9
   DO
      WRITE(10, *) x, nev_interp%interp_at(x)
      x = x + 0.1
