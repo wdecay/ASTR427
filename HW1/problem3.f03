@@ -1,7 +1,12 @@
+! Problem 2. Interpolation
+!
 MODULE interpol
   IMPLICIT NONE
 
+  ! Interpolation base class
+  !
   TYPE, ABSTRACT :: InterpolationBase
+     ! Pointer to a 2D array with the columns corresponding to X and Y
      REAL(kind=8), DIMENSION(:, :), POINTER :: data
    CONTAINS
      PRIVATE
@@ -10,6 +15,7 @@ MODULE interpol
   end type InterpolationBase
 
   INTERFACE
+     ! Interface of a function for interpolating a function at a given point
      FUNCTION interpolate(this, x) RESULT(val)
        IMPORT InterpolationBase
        CLASS(InterpolationBase), INTENT(in) :: this
@@ -18,22 +24,32 @@ MODULE interpol
      END FUNCTION INTERPOLATE
   END INTERFACE
 
+  ! Linear interpolation
+  !
   TYPE, EXTENDS(InterpolationBase) :: LinearInterpolation
    CONTAINS
      PROCEDURE :: interp_at => interp_at_linear
   END TYPE LinearInterpolation
 
+  ! Neville's interpolation
+  !
   TYPE, EXTENDS(InterpolationBase) :: NevilleInterpolation
      INTEGER :: n
    CONTAINS
      PROCEDURE :: interp_at => interp_at_neville
   END TYPE NevilleInterpolation
 
-CONTAINS 
+CONTAINS
+  ! A member of InterpolationBase.
+  ! Returns:
+  !     Smallest index j such that this%data(j, 1) <= x.
+  !     -1 if no such index is found.
+  !
   FUNCTION closest_idx(this, x) result(idx)
     CLASS(InterpolationBase), INTENT(in) :: this
     REAL(kind=8), INTENT(in) :: x
     INTEGER :: idx, l, r, m
+
     l = 1
     r = SIZE(this%data, 1)
 
@@ -48,7 +64,13 @@ CONTAINS
        RETURN
     END IF
     
-    ! Binary search
+    ! Binary search. Note: the assignment suggested assuming the the
+    ! data points evenly spread. Relying on that and taking care of
+    ! the possible edge cases related to precision loss (unless the
+    ! independent variable is an integer) wouldn't be much simpler
+    ! than the more general method presented here.  Generally, in
+    ! software engineering the overhead of O(logN) is considered to be
+    ! essentially free.
     DO
        m = (l + r) / 2
        IF (this%data(m, 1) <= x) THEN
@@ -64,6 +86,8 @@ CONTAINS
     END DO
   END FUNCTION closest_idx
 
+  ! Implementation of linear interpolation.
+  !
   FUNCTION interp_at_linear(this, x) result(y)
     CLASS(LinearInterpolation), INTENT(in) :: this
     REAL(kind=8), INTENT(in) :: x
@@ -87,6 +111,8 @@ CONTAINS
     y = a * this%data(idx, 2) + (1 - a) * this%data(idx + 1, 2)
   END FUNCTION interp_at_linear
 
+  ! Implementation of Neville's algorithm.
+  !
   FUNCTION interp_at_neville(this, x) result(y)
     CLASS(NevilleInterpolation), INTENT(in) :: this
     REAL(kind=8), INTENT(in) :: x
@@ -135,6 +161,12 @@ CONTAINS
 
   END FUNCTION interp_at_neville
 
+  ! Loads the input data. Reads a two-column text file where the first
+  ! line can be a comment starting with #. Allocates memory for a 2D
+  ! array of the appropriate size with the columns corresponding to X
+  ! and Y and assigns the pointer to the array to the input parameter
+  ! `out`.
+  !     
   SUBROUTINE load_data(fname, out)
     REAL(kind=8), DIMENSION(:, :), ALLOCATABLE, INTENT(out) :: out
     INTEGER :: n = 0, error, i, j
@@ -171,6 +203,7 @@ PROGRAM interpolation_demo
   
   REAL(kind=8), dimension(:, :), allocatable, TARGET :: tbl
   REAL(kind=8) :: x
+  INTEGER :: status
   type(LinearInterpolation) :: lin_interp
   type(NevilleInterpolation) :: nev_interp
 
@@ -183,17 +216,22 @@ PROGRAM interpolation_demo
   PRINT *, "Linear interpolation: ", lin_interp%interp_at(x)
   nev_interp = NevilleInterpolation(tbl, 4)
   PRINT *, "Neville's algorithm:  ", nev_interp%interp_at(x)
-
+  
+  ! The code below will tabulate the Neville-interpolated function
+  ! over an interval and attempt to create a plot with gnuplot. If
+  ! gnuplot isn't installed, no big deal.
+  
   OPEN(10, file="tabulation.txt")
-  x = 1
+  x = 0.5
   DO
      WRITE(10, *) x, nev_interp%interp_at(x)
      x = x + 0.1
      IF (x > 6) EXIT
   END DO
-
-  CALL EXECUTE_COMMAND_LINE('gnuplot plot.plt')
+  CLOSE(10)
   
+  CALL EXECUTE_COMMAND_LINE('gnuplot plot.plt', CMDSTAT=status, WAIT=.true.)
+
   DEALLOCATE(tbl)
   STOP
 END PROGRAM interpolation_demo

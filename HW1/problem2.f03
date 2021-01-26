@@ -12,8 +12,6 @@ PROGRAM roundoff_error
      WRITE(*, "(E15.10,F15.10)") x, expr(x)
   END DO
 
-  WRITE(*, "(B0.64)") COS(1d-8)
-
   STOP
   
 CONTAINS 

@@ -63,7 +63,7 @@ such as, for instance, identifying infinities.
 Here the program return as subnormal number with a zero exponent and
 zero implicit first bit of the mantissa. Subnormal numbers are also
 defined by the standard, but their use can be dangerous and should be
-avoided. The smallest "normal" number is ~1.17549435E-38~ who
+avoided. The smallest "normal" number is ~1.17549435E-38~ whose
 representation in binary is ~00000000100000000000000000000000~. Here
 again the exponent could've been smaller by one, but the standard
 reserves the extra bit for other purposes (like repbresenting
