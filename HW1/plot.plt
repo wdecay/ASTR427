@@ -1,5 +1,5 @@
 set title "4th degree polynomial interpolation"
-set terminal png size 1024,768
+set terminal png size 800,600
 set style line 1 linecolor rgb '#0060ad' linetype 1 linewidth 2
 set style line 2 linecolor rgb '#dd181f' linetype 1 linewidth 2
 set output 'interpolation.png'
