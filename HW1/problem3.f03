@@ -15,7 +15,9 @@ MODULE interpol
   end type InterpolationBase
 
   INTERFACE
-     ! Interface of a function for interpolating a function at a given point
+     ! Interface of a function for interpolating a function at a given point.
+     ! To be implemented in classes derived from InterpolationBase.
+     !
      FUNCTION interpolate(this, x) RESULT(val)
        IMPORT InterpolationBase
        CLASS(InterpolationBase), INTENT(in) :: this
@@ -34,6 +36,7 @@ MODULE interpol
   ! Neville's interpolation
   !
   TYPE, EXTENDS(InterpolationBase) :: NevilleInterpolation
+     ! Degree of interpolating polynomial
      INTEGER :: n
    CONTAINS
      PROCEDURE :: interp_at => interp_at_neville
@@ -113,6 +116,14 @@ CONTAINS
 
   ! Implementation of Neville's algorithm.
   !
+  ! Discussion:
+  !
+  !     This may do a little more than what was expected in the
+  !     assignment: it allows interpolating on an arbitrary number of
+  !     points by polynomials of arbitrary degree (given that n >= N -
+  !     1). It was assumed that convergence check wasn't a part of the
+  !     assignment.
+  !
   FUNCTION interp_at_neville(this, x) result(y)
     CLASS(NevilleInterpolation), INTENT(in) :: this
     REAL(kind=8), INTENT(in) :: x
@@ -122,17 +133,19 @@ CONTAINS
 
     idx = this%closest_idx(x)
 
+    ! We want select a subset of points around idx.
     ! WARNING: it is assumed here that the input is evenly
-    ! spaced in the independent variable
+    ! spaced in the independent variable.
     shift = (this%n + 1) / 2
     
     ! edge cases
     IF (this%n + 1 > SIZE(this%data, 1)) THEN
        ERROR STOP "Not enough points for interpolation."
     END IF
-    
+    ! x is outside of the range of the data set and to the right.
     IF (idx == -1 .AND. x > this%data(1, 1)) idx = SIZE(this%data, 1)
-    
+    ! adjusting the shift to stay within array (either on the left or
+    ! on the right)
     IF (idx - shift <= 0) shift = idx - 1
     IF (idx - shift + this%n > SIZE(this%data, 1)) THEN
        shift = (idx + this%n - SIZE(this%data, 1))
@@ -147,15 +160,16 @@ CONTAINS
        d(i) = p(i)
     END DO
 
-    y = c(1)
+    y = c(1)                    ! initial zeroth order interpolation
 
+    ! the actual Neville's algorithm
     DO m=1, this%n
        DO i=1, this%n + 1 - m
           t = (c(i+1) - d(i)) / (this%data(idx + i - 1, 1) - this%data(idx + i + m - 1, 1))
           d(i) = (this%data(idx + i + m - 1, 1) - x) * t
           c(i) = (this%data(idx + i - 1, 1) - x) * t
        END DO
-       y = y + c(1)
+       y = y + c(1)             ! upgrade to the next order
     END DO
 
   END FUNCTION interp_at_neville
@@ -165,6 +179,10 @@ CONTAINS
   ! array of the appropriate size with the columns corresponding to X
   ! and Y and assigns the pointer to the array to the input parameter
   ! `out`.
+  !
+  ! NOTE: Fortran stores arrays in the column-major order, so Xs (and
+  ! Ys) will be contiguous in memory. Detailed comments are not
+  ! provided since I/O is not the main object of the assignment.
   !     
   SUBROUTINE load_data(fname, out)
     REAL(kind=8), DIMENSION(:, :), ALLOCATABLE, INTENT(out) :: out
@@ -207,13 +225,13 @@ PROGRAM interpolation_demo
   TYPE(NevilleInterpolation) :: nev_interp
 
   CALL load_data('hw1_data.txt', tbl)
-  WRITE(*,*) 'Enter x'
+  WRITE(*,*) 'Enter x:'
   READ *, x
 
   PRINT *, "Actual value:         ", 100 / x**2
   lin_interp = LinearInterpolation(tbl)
   PRINT *, "Linear interpolation: ", lin_interp%interp_at(x)
-  nev_interp = NevilleInterpolation(tbl, 4)
+  nev_interp = NevilleInterpolation(tbl, 4) ! using 4th degree polynomials
   PRINT *, "Neville's algorithm:  ", nev_interp%interp_at(x)
   
   ! The code below will tabulate the Neville-interpolated function

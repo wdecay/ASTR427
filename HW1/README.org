@@ -119,10 +119,26 @@ numerator and the result will agree with the analytical limit.
 * 3. Interpolation
 The output of ~problem3~:
 #+BEGIN_EXAMPLE
- Enter x
+ Enter x:
 4.75
  Actual value:            4.4321329639889200     
  Linear interpolation:    4.5625000000000000     
- Neville's algorithm:     2.9516602099609379
+ Neville's algorithm:     2.9516602099609379     
 #+END_EXAMPLE
+
+Functions ~y_n(x) = x^n~ are linearly independent. This means there
+does not exist a linear combination of $x^k$ for positive values of
+$k$ which would perfectly approximate the function $y = 100/x^2$. Thus
+the interpolating polinomial will be prone to oscillating about the
+tabulated values, as can be seen in the plot below.
+
+This is also a somewhat /ill-conditioned/ dataset (Press et al.,
+p. 112) because the values of the independent variable are evenly
+spaced and, to a lesser extent, because there's a relatively nearby
+pole at $x = 0$. Since the slope doesn't vary too much between $x=4$
+and $x=5$, linear interpolation performs better being unaffected by
+the oscillations. This problem is well-studied and is generally known
+as the [[https://en.wikipedia.org/wiki/Runge%2527s_phenomenon#:~:text=In%2520the%2520mathematical%2520field%2520of%2520numerical%2520analysis%252C%2520Runge%2527s,degree%2520over%2520a%2520set%2520of%2520equispaced%2520interpolation%2520points.][Runge's phenomenon]], but I assume I am not expected to do any
+advanced Mathematical analysis here, so I'll leave it at this.
+
  [[./interpolation.png]]
