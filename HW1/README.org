@@ -138,7 +138,7 @@ spaced and, to a lesser extent, because there's a relatively nearby
 pole at ~x = 0~. Since the slope doesn't vary too much between ~x=4~
 and ~x=5~, linear interpolation performs better being unaffected by
 the oscillations. This problem is well-studied and is generally known
-as the [[https://en.wikipedia.org/wiki/Runge%2527s_phenomenon][Runge's phenomenon]], but I assume I am not expected to do any
+as the [[https://en.wikipedia.org/wiki/Runge's_phenomenon][Runge's phenomenon]], but I assume I am not expected to do any
 advanced Mathematical analysis here, so I'll leave it at this.
 
  [[./interpolation.png]]
