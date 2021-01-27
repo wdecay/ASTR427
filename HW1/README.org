@@ -11,7 +11,7 @@ reference. Implementation-specific comments are included with the
 code, whereas general and conceptual questions and answered here.
 
 * 1. Floating point representation
-The output of ~problem1~:
+The output of ~problem1~ (32-bit):
 #+BEGIN_EXAMPLE
 (a) 5.96046448E-08, 00110011100000000000000000000000
 (b) 1.19209290E-07, 00110100000000000000000000000000
@@ -21,7 +21,20 @@ The output of ~problem1~:
 Note: The following floating-point exceptions are signalling: IEEE_OVERFLOW_FLAG IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
 #+END_EXAMPLE
 
-According to IEEE754, the 32-bin floating point numbers have the
+In Fortran ~REAL~ is 32-bit by default. It is easier to explain the
+concepts with fewer bits, so I will mainly refer to the output above
+in my explanations. That said, the same approach and code work for
+double precision floats. Replacing ~REAL~ with ~REAL(kind=8)~ produces
+the following output:
+#+BEGIN_EXAMPLE
+(a) 1.11022302E-16, 0011110010100000000000000000000000000000000000000000000000000000
+(b) 2.22044605E-16, 0011110010110000000000000000000000000000000000000000000000000000
+(c) 1.68533731+308, 0111111111101110000000000000000000000000000000000000000000000000
+(d) 4.94065646-324, 0000000000000000000000000000000000000000000000000000000000000001
+ Fortran's HUGE and TINY REAL numbers:    1.7976931348623157E+308   2.2250738585072014E-308
+#+END_EXAMPLE
+
+According to IEEE754, the 32-bit floating point numbers have the
 following format (from MSB TO LSB):
 - (S)ign (1 bit)
 - (E)xponent (8 bits)

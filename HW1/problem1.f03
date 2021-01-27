@@ -2,7 +2,7 @@
 !
 PROGRAM empirical_real_numbers
   IMPLICIT NONE
-  REAL :: r
+  REAL :: r ! REAL is by default 32 bit in Fortran
   CHARACTER(*), PARAMETER :: fmt = '(A, ES15.8, A, B0.32)'
 
   r = machine_epsilon_minus()
