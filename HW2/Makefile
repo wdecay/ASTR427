@@ -1,13 +1,14 @@
 .SUFFIXES:
 FC=gfortran
+CFLAGS=-fdefault-real-8
 
 all: problem1 # problem2 problem3
 
 problem1: problem1.o
-	$(FC) problem1.o rk4.o -o problem1
+	$(FC) problem1.o ode.o -o problem1
 
 
-problem1.o: problem1.f03 rk4.mod
+problem1.o: problem1.f03 ode.mod
 	$(FC) -c $<
 
 # problem2: problem2.o
@@ -18,8 +19,8 @@ problem1.o: problem1.f03 rk4.mod
 
 %.o : %.f03
 	$(FC) -c  $<
-rk4.mod : rk4.f03
-	$(FC) -c rk4.f03
+ode.mod : ode.f03
+	$(FC) -c ode.f03
 
 .PHONY: clean
 clean:
