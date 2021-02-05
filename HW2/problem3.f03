@@ -4,7 +4,15 @@ PROGRAM orbit_calculation
 
   REAL, DIMENSION(4) :: x = [1.0, 0.0, 0.0, 0.3]
   REAL, PARAMETER :: t_max = 100.0
-  REAL :: t = 0.0, h = 0.02, e
+  REAL :: t = 0.0, h, e
+  CHARACTER(100) :: h_str
+
+  IF (COMMAND_ARGUMENT_COUNT() == 1) THEN
+     CALL GET_COMMAND_ARGUMENT(1, h_str) 
+     READ(h_str, *) h
+  ELSE
+     ERROR STOP "No step provided."
+  END IF
 
   DO
      e = 0.5*(x(3)**2 + x(4)**2) - 1/denom(x(1), x(2), 0.5)
