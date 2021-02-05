@@ -12,5 +12,6 @@ run_steps () {
 }
 
 make
-run_steps ./problem2 cos
-run_steps ./problem3 orbit
+run_steps ./problem2 cos &
+run_steps ./problem3 orbit &
+wait

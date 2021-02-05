@@ -15,7 +15,7 @@ PROGRAM orbit_calculation
   END IF
 
   DO
-     e = 0.5*(x(3)**2 + x(4)**2) - 1/denom(x(1), x(2), 0.5)
+     e = 0.5 * (x(3)**2 + x(4)**2) - 1 / denom(x(1), x(2), 0.5)
      PRINT *, t, x, e
      IF (t == t_max) EXIT
      t = t + h

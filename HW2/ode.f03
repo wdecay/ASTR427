@@ -2,13 +2,13 @@ MODULE ode
   IMPLICIT NONE
 
   INTERFACE
-     FUNCTION fn(t, y) result(yprime)
+     FUNCTION fn(t, y) RESULT(yprime)
        REAL, INTENT(in) :: t
        REAL, DIMENSION(:), INTENT(in) :: y
        REAL, DIMENSION(SIZE(y, 1)) :: yprime
      END FUNCTION fn
 
-     FUNCTION fnl(z, n) result(w)
+     FUNCTION fnl(z, n) RESULT(w)
        REAL, DIMENSION(:), INTENT(in) :: z
        REAL, DIMENSION(n) :: w
      END FUNCTION fnl
@@ -17,7 +17,7 @@ MODULE ode
 
 CONTAINS
 
-  FUNCTION euler_step(f, t, y, h) result(ynext)
+  FUNCTION euler_step(f, t, y, h) RESULT(ynext)
     PROCEDURE(fn) :: f
     REAL, INTENT(in) :: t, h
     REAL, DIMENSION(:), INTENT(in) :: y
@@ -37,7 +37,7 @@ CONTAINS
     v = v + h / 2 * g(x, SIZE(v, 1))
   END SUBROUTINE leapfrog_step
   
-  FUNCTION rk4_step(f, t, y, h) result(ynext)
+  FUNCTION rk4_step(f, t, y, h) RESULT(ynext)
     PROCEDURE(fn) :: f
     REAL, INTENT(in) :: t, h
     REAL, DIMENSION(:), INTENT(in) :: y

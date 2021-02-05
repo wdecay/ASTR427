@@ -18,7 +18,7 @@ PROGRAM integrator_comparison
      h = 1d-5
      DO
         CALL integrate(0.0, t_max, h, out_ptr, .TRUE.)
-        PRINT *, h, LOG(h), LOG(ABS(out([2, 4, 6]) - cos(t_max)))
+        PRINT *, h, LOG(h), LOG(ABS(out([2, 4, 6]) - COS(t_max)))
         h = h * 10
         IF (h > 2.0) EXIT
      END DO
