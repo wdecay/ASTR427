@@ -1,0 +1,56 @@
+* General notes
+All numerical integration routines are placed in the [[ode.f03]]
+module. The programs are written to send the the results (which will
+depend on the command line arguments) to the standard output. Since
+Fortran lacks adequate plotting capabilities, ~gnuplot~ was used to
+produce graphs from the output of each program. The process is
+orchestrated by the shell script [[runall.sh]], which calls ~problem2~ and
+~problem3~ with appropriate parameteres and forwards the results to
+~gnuplot~. (The ~gnuplot~ code for the 3 types of figures is provided
+in [[./gnuplot]].)
+
+If ~bash~, ~GNU make~, ~gfortran~ and ~gnuplot~ are available,
+[[runall.sh]] will build ~problem2~ and ~problem3~, and create all the
+figures in the [[./output]] directory:
+$ ./runall.sh
+#+BEGIN_EXAMPLE
+gfortran -fdefault-real-8  -c ode.f03
+gfortran -fdefault-real-8  -c problem2.f03
+gfortran -fdefault-real-8  problem2.o ode.o -o problem2
+gfortran -fdefault-real-8  -c problem3.f03
+gfortran -fdefault-real-8  problem3.o ode.o -o problem3
+
+[done] Problem 2 (a)
+
+real	0m0.203s
+user	0m0.169s
+sys	0m0.036s
+
+[done] Problem 3 (Leapfrog)
+
+real	0m0.233s
+user	0m0.194s
+sys	0m0.040s
+
+[done] Problem 3 (Runge-Kutta)
+
+real	0m0.237s
+user	0m0.225s
+sys	0m0.014s
+
+[done] Problem 2 (b)
+
+real	0m0.806s
+user	0m0.806s
+sys	0m0.000s
+
+Graphs saved to ./output
+#+END_EXAMPLE
+
+* Problem 1
+* Problem 2
+The code in [[problem2.f03]], will perform numerical integration
+using three different methods and send the results to standard
+output. For part (a)
+
+* Problem 3
