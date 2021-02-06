@@ -1,0 +1,137 @@
+* General notes
+  All numerical integration routines are placed in the [[ode.f03]]
+  module. The programs are written to send the results (which will
+  depend on the command line arguments) to the standard output. Since
+  Fortran lacks adequate plotting capabilities, ~gnuplot~ was used to
+  produce graphs from the output of each program. The process is
+  orchestrated by the shell script [[runall.sh]], which calls ~problem2~
+  and ~problem3~ with appropriate parameters and forwards the results
+  to ~gnuplot~. (The ~gnuplot~ code for the 3 types of figures is
+  provided in [[./gnuplot]].)
+
+  If ~bash~, ~GNU make~, ~gfortran~ and ~gnuplot~ are available,
+  [[runall.sh]] will build ~problem2~ and ~problem3~, and run a sequence
+  of commands to create all the figures in the [[./output]] directory:
+#+BEGIN_EXAMPLE
+$ ./runall.sh
+gfortran -fdefault-real-8  -c ode.f03
+gfortran -fdefault-real-8  -c problem2.f03
+gfortran -fdefault-real-8  problem2.o ode.o -o problem2
+gfortran -fdefault-real-8  -c problem3.f03
+gfortran -fdefault-real-8  problem3.o ode.o -o problem3
+
+[done] Problem 2 (a)
+
+real	0m0.203s
+user	0m0.169s
+sys	0m0.036s
+
+[done] Problem 3 (Leapfrog)
+
+real	0m0.233s
+user	0m0.194s
+sys	0m0.040s
+
+[done] Problem 3 (Runge-Kutta)
+
+real	0m0.237s
+user	0m0.225s
+sys	0m0.014s
+
+[done] Problem 2 (b)
+
+real	0m0.806s
+user	0m0.806s
+sys	0m0.000s
+
+Graphs saved to ./output
+#+END_EXAMPLE
+
+* Problem 1
+  See comments in [[ode.f03]].
+* Problem 2
+  The code in [[problem2.f03]] will perform numerical integration using
+  three different methods and send the results to standard output. If
+  called with a ~REAL~ parameter, the output will be a table with the
+  following 7 columns for all values of ~t~:
+#+BEGIN_EXAMPLE
+<t> <Euler:x> <Euler:x'> <LF:x> <LF:x'> <RK4:x> <RK4:x'>
+#+END_EXAMPLE
+When called without parameters, the code will test the convergence of
+the error term and print the following 4 columns for a geometric
+sequence of ~h~ values:
+#+BEGIN_EXAMPLE
+<LOG2(h)> <LOG2(|Euler:x(30) - cos(30)|)> <LOG2(|LF:x(30) - cos(30)|)> <LOG2(|RK4:x(30) - cos(30)|)>
+#+END_EXAMPLE
+** Part (a)
+   The graphs below show the behavior of the solutions produced by the
+   Euler, Leapfrog and Runge-Kutta methods with step sizes ~0.01~,
+   ~0.03~, ~0.10~, ~0.30~ and ~1.00~. The performance of the Euler
+   method is generally inadequate even when the step size is small;
+   with larger time steps it becomes increasingly unstable and
+   divergent. The Leapfrog method does well until the step is
+   increased to about ~0.30~ and then starts deviating from the
+   analytical solution. However, it still seems to maintain numerical
+   stability and doesn't blow up like Euler's method. In this
+   particular case, the phase appears to slip, but the amplitude
+   remains largely unaffected. Such deficiency may be acceptable if
+   high precision isn't a requirement and qualitative behavior of the
+   solution is of primary interest. The error in the RK4 solution
+   becomes evident only as the step size gets closer to 1. As
+   expected, this method is most accurate.
+
+   [[./output/cos_comparison_step_0.01.png]]
+   [[./output/cos_comparison_step_0.03.png]]
+   [[./output/cos_comparison_step_0.10.png]]
+   [[./output/cos_comparison_step_0.30.png]]
+   [[./output/cos_comparison_step_1.00.png]]
+** Part (b)
+   The steps used to produce this graph were negative powers of 2
+   starting from ~2^-15~ up to ~2^1~ as can be seen from the
+   horizontal axis. Using steps sizes not representable as floating
+   point numbers (e.g., 0.03) breaks the expected convergence pattern
+   and makes the graph highly irregular. (It is not fully clear why
+   that happens, but likely it is due to the noise in the low binary
+   digits which leads to loss in precision. RK4 seems to be
+   particularly susceptible to this issue.)
+
+   The slope of each graph (on the interval where the behavior is
+   regular) should correspond to the order of the error
+   term. Evidently, for Euler's method the slope is about 1, for
+   Leapfrog method the slope is about 2 and for RK4 it is
+   about 4. This exactly corresponds to the theoretically predicted
+   orders of the corresponding error terms. The saturation of the RK4
+   curve for ~log2(h) < -11~ indicates that there's no gain when the
+   steps size is reduced below ~2^-11~; at that point the error is
+   dominated by the precision of the hardware.
+   [[./output/conv_test.png]]
+* Problem 3
+The code in [[problem3.f03]] expects 2 parameters:
+- method (~--rk~ for Runge-Kutta or ~--lf~ for Leapfrog)
+- step size
+The output has the following 6 columns:
+#+BEGIN_EXAMPLE
+<t> <x> <y> <x'> <y'> <e>
+#+END_EXAMPLE
+Column ~<e>~ contains the calculated value of the Hamiltonian. Since
+the Hamiltonian does not explicitly depend on time, it must be
+time-invariant. Thus if the total energy changes, it is due to
+numerical and hardware errors. The magnitude of these errors can be
+seen in the graphs below where ~E(t) - <E(t)>~ (the difference between
+the energy and the time-average of energy) is plotted. As expected,
+RK4 has generally lower errors (at least for reasonable step
+sizes). Surprisingly, both methods have a spike in the error when
+~h=0.1~. Overall, both methods are well-behaved with Leapfrog again
+exhibiting the tendency for amplitude stability when the step size is
+high.
+
+[[./output/orbit_Leapfrog_step_0.01.png]]
+[[./output/orbit_Runge-Kutta_step_0.01.png]]
+[[./output/orbit_Leapfrog_step_0.03.png]]
+[[./output/orbit_Runge-Kutta_step_0.03.png]]
+[[./output/orbit_Leapfrog_step_0.10.png]]
+[[./output/orbit_Runge-Kutta_step_0.10.png]]
+[[./output/orbit_Leapfrog_step_0.30.png]]
+[[./output/orbit_Runge-Kutta_step_0.30.png]]
+[[./output/orbit_Leapfrog_step_1.00.png]]
+[[./output/orbit_Runge-Kutta_step_1.00.png]]
