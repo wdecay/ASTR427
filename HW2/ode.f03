@@ -9,7 +9,9 @@ MODULE ode
      END FUNCTION fn
 
      FUNCTION fnl(z, n) RESULT(w)
+       IMPLICIT NONE
        REAL, DIMENSION(:), INTENT(in) :: z
+       INTEGER, INTENT(in) :: n
        REAL, DIMENSION(n) :: w
      END FUNCTION fnl
 

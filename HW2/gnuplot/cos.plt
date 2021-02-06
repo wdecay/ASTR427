@@ -6,12 +6,9 @@ set style line 1 linecolor rgb '#0060ad' linetype 1 linewidth 2
 set style line 2 linecolor rgb '#dd181f' linetype 1 linewidth 1
 
 set grid
-; set key box opaque
 set key outside horizontal below
 
-; set xlabel "t"
 unset xlabel
-; set ylabel "x"
 unset ylabel
 f(x) = cos(x)
 
