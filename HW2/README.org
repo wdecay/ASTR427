@@ -92,7 +92,8 @@ sequence of ~h~ values:
    point numbers (e.g., 0.03) breaks the expected convergence pattern
    and makes the graph highly irregular. (It is not fully clear why
    that happens, but likely it is due to the noise in the low binary
-   digits. RK4 seems to be particularly susceptible to this issue.)
+   digits which leads to loss in precision. RK4 seems to be
+   particularly susceptible to this issue.)
 
    The slope of each graph (on the interval where the behavior is
    regular) should correspond to the order of the error

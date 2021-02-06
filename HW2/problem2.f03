@@ -1,3 +1,5 @@
+! Problem 2. Second-order differential equation.
+!
 PROGRAM integrator_comparison
   USE ode
   IMPLICIT NONE
@@ -9,15 +11,21 @@ PROGRAM integrator_comparison
   REAL, DIMENSION(7), TARGET :: out
 
   IF (COMMAND_ARGUMENT_COUNT() == 1) THEN
+     ! If one command-line argument received, it is assumed to be the
+     ! step size. In the case, the function is integrated with 3
+     ! different methods and the results from each are tabulated.
      CALL GET_COMMAND_ARGUMENT(1, h_str) 
      READ(h_str, *) h
      CALL integrate(0.0, t_max, h)
   ELSE
-     ! as a function of step size. comparison
+     ! Without arguments (or if more than 1) convergence test is
+     ! executed for a geometric sequence of step sizes.
      out_ptr => out
-     h = 1.0/2**15
+     h = 1.0/2**15 ! better avoid noise in low binary digits, or else
+                   ! poor convergence is likely
      DO
         CALL integrate(0.0, t_max, h, out_ptr, .FALSE.)
+        ! nice array subset syntax below 
         PRINT *, [LOG(h), LOG(ABS(out([2, 4, 6]) - COS(t_max)))] / LOG(2.0)
         h = h * 2
         IF (h > 2.0) EXIT
@@ -27,6 +35,22 @@ PROGRAM integrator_comparison
   STOP
 
 CONTAINS
+  ! Integrates a system of first order ODEs.
+  !
+  ! Arguments:
+  !  t_from: Initial value of the independent variable
+  !  t_to: Final value of the independent variable
+  !  h: step size
+  !  final_out_ptr: Optional. If provided the values at t_to are
+  !  written to this array
+  !  print_output: Optional. Set to .FALSE. to suppress terminal
+  !  output.
+  !
+  ! Discussion:
+  !  This will print the values after each step, which may be
+  !  excessive if the interval is large and/or h is small. Having some
+  !  output throttling mechanism would be nice, but for this
+  !  assignment it wasn't necessary.
   SUBROUTINE integrate(t_from, t_to, h, final_out_ptr, print_output)
     REAL, INTENT(in) :: t_from, t_to, h
     REAL, DIMENSION(:), POINTER, INTENT(in), OPTIONAL :: final_out_ptr
@@ -44,45 +68,50 @@ CONTAINS
     x_rk = x_euler
 
     DO
-       last = [t, x_euler, x_lf,  x_rk]
+       last = [t, x_euler, x_lf,  x_rk] ! the total of 7 values
        IF (print_output_val) PRINT *, last
        IF (t == t_to) EXIT
        t = t + h
-       IF (t > t_to) t = t_to
+       IF (t > t_to) t = t_to ! to make sure t_to is hit
 
-       x_euler = euler_step(f, t, x_euler, h)
-       CALL leapfrog_step(f_lf, g_lf, x_lf(1:1), x_lf(2:2), h)
-       x_rk = rk4_step(f, t, x_rk, h)
+       x_euler = euler_step(rk_f, t, x_euler, h)
+       CALL leapfrog_step(lf_f, lf_g, x_lf(1:1), x_lf(2:2), h)
+       x_rk = rk4_step(rk_f, t, x_rk, h)
     END DO
 
     IF (PRESENT(final_out_ptr)) THEN
        final_out_ptr = last
-    END IF
-    
+    END IF    
   END SUBROUTINE integrate
-  
-  FUNCTION f(t, y) RESULT(yprime)
+
+  ! Euler/Runge-Kutta derivatives generating function.
+  ! 
+  FUNCTION rk_f(t, x) RESULT(dd)
     REAL, INTENT(in) :: t
-    REAL, DIMENSION(:), INTENT(in) :: y
-    REAL, DIMENSION(SIZE(y, 1)) :: yprime
+    REAL, DIMENSION(:), INTENT(in) :: x
+    REAL, DIMENSION(SIZE(x, 1)) :: dd
 
-    yprime = [y(2), -y(1)]
-  END FUNCTION f
+    dd = [x(2), -x(1)]
+  END FUNCTION rk_f
 
-  FUNCTION f_lf(v, n) RESULT(w)
+  ! Leapfrog `f(v)` function.
+  !
+  FUNCTION lf_f(v, n) RESULT(dd)
     REAL, DIMENSION(:), INTENT(in) :: v
     INTEGER, INTENT(in) :: n
-    REAL, DIMENSION(n) :: w
+    REAL, DIMENSION(n) :: dd
 
-    w(1) = v(1)
-  END FUNCTION f_lf
+    dd = v
+  END FUNCTION lf_f
 
-  FUNCTION g_lf(x, n) RESULT(w)
+  ! Leapfrog `g(x)` function.
+  !
+  FUNCTION lf_g(x, n) RESULT(dd)
     REAL, DIMENSION(:), INTENT(in) :: x
     INTEGER, INTENT(in) :: n
-    REAL, DIMENSION(n) :: w
+    REAL, DIMENSION(n) :: dd
     
-    w(1) = -x(1)
-  END FUNCTION g_lf
+    dd = -x
+  END FUNCTION lf_g
   
 END PROGRAM integrator_comparison
