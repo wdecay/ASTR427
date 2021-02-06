@@ -46,7 +46,7 @@ PROGRAM orbit_calculation
 
 CONTAINS
 
-  ! Computes a frequency-occurring denominator.
+  ! Computes a frequently-occurring denominator expression.
   !
   FUNCTION denom(x, y, p) RESULT(v)
     REAL, INTENT(in) :: x, y, p
