@@ -1,19 +1,19 @@
 * General notes
-All numerical integration routines are placed in the [[ode.f03]]
-module. The programs are written to send the the results (which will
-depend on the command line arguments) to the standard output. Since
-Fortran lacks adequate plotting capabilities, ~gnuplot~ was used to
-produce graphs from the output of each program. The process is
-orchestrated by the shell script [[runall.sh]], which calls ~problem2~ and
-~problem3~ with appropriate parameteres and forwards the results to
-~gnuplot~. (The ~gnuplot~ code for the 3 types of figures is provided
-in [[./gnuplot]].)
+  All numerical integration routines are placed in the [[ode.f03]]
+  module. The programs are written to send the the results (which will
+  depend on the command line arguments) to the standard output. Since
+  Fortran lacks adequate plotting capabilities, ~gnuplot~ was used to
+  produce graphs from the output of each program. The process is
+  orchestrated by the shell script [[runall.sh]], which calls ~problem2~
+  and ~problem3~ with appropriate parameteres and forwards the results
+  to ~gnuplot~. (The ~gnuplot~ code for the 3 types of figures is
+  provided in [[./gnuplot]].)
 
-If ~bash~, ~GNU make~, ~gfortran~ and ~gnuplot~ are available,
-[[runall.sh]] will build ~problem2~ and ~problem3~, and create all the
-figures in the [[./output]] directory:
-$ ./runall.sh
+  If ~bash~, ~GNU make~, ~gfortran~ and ~gnuplot~ are available,
+  [[runall.sh]] will build ~problem2~ and ~problem3~, and create all the
+  figures in the [[./output]] directory:
 #+BEGIN_EXAMPLE
+$ ./runall.sh
 gfortran -fdefault-real-8  -c ode.f03
 gfortran -fdefault-real-8  -c problem2.f03
 gfortran -fdefault-real-8  problem2.o ode.o -o problem2
@@ -48,9 +48,24 @@ Graphs saved to ./output
 #+END_EXAMPLE
 
 * Problem 1
+  See comments in [[ode.f03]].
 * Problem 2
-The code in [[problem2.f03]], will perform numerical integration
-using three different methods and send the results to standard
-output. For part (a)
-
+  The code in [[problem2.f03]], will perform numerical integration using
+  three different methods and send the results to standard output. If
+  called with a ~REAL~ parameter, the output will be a table with the
+  following 7 columns:
+#+BEGIN_EXAMPLE
+<t> <Euler:x> <Euler:x'> <LF:x> <LF:x'> <RK4:x> <RK4:x'>
+#+END_EXAMPLE
+When called without parameters, the code will test the convergence of
+the error term and print the following 4 columns:
+#+BEGIN_EXAMPLE
+<LOG2(t)> <LOG2(|Euler:x(30) - cos(30)|)> <LOG2(|LF:x(30) - cos(30)|)> <LOG2(|RK4:x(30) - cos(30)|)>
+#+END_EXAMPLE
+** Part (a)
+[[./output/cos_comparision_step_0.01.png]]
+[[./output/cos_comparision_step_0.03.png]]
+[[./output/cos_comparision_step_0.10.png]]
+[[./output/cos_comparision_step_0.30.png]]
+[[./output/cos_comparision_step_1.00.png]]
 * Problem 3

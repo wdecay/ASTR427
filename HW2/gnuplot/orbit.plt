@@ -5,9 +5,6 @@ set style line 1 linecolor rgb '#0060ad' linetype 1 linewidth 1
 set style line 2 linecolor rgb '#dd181f' linetype 1 linewidth 1
 
 set grid
-# set key box opaque
-# set key outside horizontal below
-
 stats data using 6 nooutput
 
 set xlabel "x"
