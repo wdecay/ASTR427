@@ -25,7 +25,7 @@ PROGRAM integrator_comparison
                    ! poor convergence is likely
      DO
         CALL integrate(0.0, t_max, h, out_ptr, .FALSE.)
-        ! nice array subset syntax below 
+        ! very nice array manipulation and indexing features:
         PRINT *, [LOG(h), LOG(ABS(out([2, 4, 6]) - COS(t_max)))] / LOG(2.0)
         h = h * 2
         IF (h > 2.0) EXIT

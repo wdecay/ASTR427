@@ -1,5 +1,6 @@
 ! Library of numerical integration methods. Contains Euler's, leapfrog
-! and 4th order Runge-Kutta step implementations.
+! and 4th order Runge-Kutta step implementations. Each method supports
+! an arbitrary number of coupled first-order ODEs.
 !
 ! Discussion:
 !  In most cases, these integration steps will be called in a

@@ -5,7 +5,7 @@
   Fortran lacks adequate plotting capabilities, ~gnuplot~ was used to
   produce graphs from the output of each program. The process is
   orchestrated by the shell script [[runall.sh]], which calls ~problem2~
-  and ~problem3~ with appropriate parameteres and forwards the results
+  and ~problem3~ with appropriate parameters and forwards the results
   to ~gnuplot~. (The ~gnuplot~ code for the 3 types of figures is
   provided in [[./gnuplot]].)
 
@@ -50,7 +50,7 @@ Graphs saved to ./output
 * Problem 1
   See comments in [[ode.f03]].
 * Problem 2
-  The code in [[problem2.f03]], will perform numerical integration using
+  The code in [[problem2.f03]] will perform numerical integration using
   three different methods and send the results to standard output. If
   called with a ~REAL~ parameter, the output will be a table with the
   following 7 columns for all values of ~t~:
