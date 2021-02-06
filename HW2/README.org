@@ -64,9 +64,9 @@ sequence of ~h~ values:
 <LOG2(h)> <LOG2(|Euler:x(30) - cos(30)|)> <LOG2(|LF:x(30) - cos(30)|)> <LOG2(|RK4:x(30) - cos(30)|)>
 #+END_EXAMPLE
 ** Part (a)
-[[output/cos_comparision_step_0.01.png]]
-[[output/cos_comparision_step_0.03.png]]
-[[output/cos_comparision_step_0.10.png]]
-[[output/cos_comparision_step_0.30.png]]
-[[output/cos_comparision_step_1.00.png]]
+[[./output/cos_comparison_step_0.01.png]]
+[[./output/cos_comparison_step_0.03.png]]
+[[./output/cos_comparison_step_0.10.png]]
+[[./output/cos_comparison_step_0.30.png]]
+[[./output/cos_comparison_step_1.00.png]]
 * Problem 3
