@@ -53,19 +53,20 @@ Graphs saved to ./output
   The code in [[problem2.f03]], will perform numerical integration using
   three different methods and send the results to standard output. If
   called with a ~REAL~ parameter, the output will be a table with the
-  following 7 columns:
+  following 7 columns for all values of ~t~:
 #+BEGIN_EXAMPLE
 <t> <Euler:x> <Euler:x'> <LF:x> <LF:x'> <RK4:x> <RK4:x'>
 #+END_EXAMPLE
 When called without parameters, the code will test the convergence of
-the error term and print the following 4 columns:
+the error term and print the following 4 columns for a geometric
+sequence of ~h~ values:
 #+BEGIN_EXAMPLE
-<LOG2(t)> <LOG2(|Euler:x(30) - cos(30)|)> <LOG2(|LF:x(30) - cos(30)|)> <LOG2(|RK4:x(30) - cos(30)|)>
+<LOG2(h)> <LOG2(|Euler:x(30) - cos(30)|)> <LOG2(|LF:x(30) - cos(30)|)> <LOG2(|RK4:x(30) - cos(30)|)>
 #+END_EXAMPLE
 ** Part (a)
-[[./output/cos_comparision_step_0.01.png]]
-[[./output/cos_comparision_step_0.03.png]]
-[[./output/cos_comparision_step_0.10.png]]
-[[./output/cos_comparision_step_0.30.png]]
-[[./output/cos_comparision_step_1.00.png]]
+[[output/cos_comparision_step_0.01.png]]
+[[output/cos_comparision_step_0.03.png]]
+[[output/cos_comparision_step_0.10.png]]
+[[output/cos_comparision_step_0.30.png]]
+[[output/cos_comparision_step_1.00.png]]
 * Problem 3
