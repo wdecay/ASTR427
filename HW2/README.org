@@ -64,13 +64,46 @@ sequence of ~h~ values:
 <LOG2(h)> <LOG2(|Euler:x(30) - cos(30)|)> <LOG2(|LF:x(30) - cos(30)|)> <LOG2(|RK4:x(30) - cos(30)|)>
 #+END_EXAMPLE
 ** Part (a)
-[[./output/cos_comparison_step_0.01.png]]
-[[./output/cos_comparison_step_0.03.png]]
-[[./output/cos_comparison_step_0.10.png]]
-[[./output/cos_comparison_step_0.30.png]]
-[[./output/cos_comparison_step_1.00.png]]
+   The graphs below show the behavior of the solutions produced by the
+   Euler, Leapfrog and Runge-Kutta methods with step sizes ~0.01~,
+   ~0.03~, ~0.10~, ~0.30~ and ~1.00~. The performance of the Euler
+   method is generally inadequate even when the step size is small;
+   with larger time steps it becomes increasingly unstable and
+   divergent. The Leapfrog method does well until the step is
+   increased to about ~0.30~ and then starts deviating from the
+   analytical solution. However, it still seems to maintain numerical
+   stability and doesn't blow up like Euler's method. In this
+   particular case, the phase appears to slip, but the amplitude
+   remains largely unaffected. Such deficiency may be acceptable if
+   high precision isn't a requirement and qualitative behavior of the
+   solution is of primary interest. The error in the RK4 solution
+   becomes evident only as the step size gets closer to 1. As
+   expected, this method is most accurate.
+
+   [[./output/cos_comparison_step_0.01.png]]
+   [[./output/cos_comparison_step_0.03.png]]
+   [[./output/cos_comparison_step_0.10.png]]
+   [[./output/cos_comparison_step_0.30.png]]
+   [[./output/cos_comparison_step_1.00.png]]
 ** Part (b)
-[[./output/conv_test.png]]
+   The steps used to produce this graph were negative powers of 2
+   starting from ~2^-15~ up to ~2^1~ as can be seen from the
+   horizontal axis. Using steps sizes not representable as floating
+   point numbers (e.g., 0.03) breaks the expected convergence pattern
+   and makes the graph highly irregular. (It is not fully clear why
+   that happens, but likely it is due to the noise in the low binary
+   digits. RK4 seems to be particularly susceptible to this issue.)
+
+   The slope of each graph (on the interval where the behavior is
+   regular) should correspond to the order of the error
+   term. Evidently, for Euler's method the slope is about 1, for
+   Leapfrog method the slope is about 2 and for RK4 it is
+   about 4. This exactly corresponds to the theoretically predicted
+   orders of the corresponding error terms. The saturation of the RK4
+   curve for ~log2(h) < -11~ indicates that there's no gain when the
+   steps size is reduced below ~2^-11~; at that point the error is
+   dominated by the precision of the hardware.
+   [[./output/conv_test.png]]
 * Problem 3
 [[./output/orbit_Leapfrog_step_0.01.png]]
 [[./output/orbit_Runge-Kutta_step_0.01.png]]
