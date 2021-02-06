@@ -1,6 +1,6 @@
 * General notes
   All numerical integration routines are placed in the [[ode.f03]]
-  module. The programs are written to send the the results (which will
+  module. The programs are written to send the results (which will
   depend on the command line arguments) to the standard output. Since
   Fortran lacks adequate plotting capabilities, ~gnuplot~ was used to
   produce graphs from the output of each program. The process is
@@ -10,8 +10,8 @@
   provided in [[./gnuplot]].)
 
   If ~bash~, ~GNU make~, ~gfortran~ and ~gnuplot~ are available,
-  [[runall.sh]] will build ~problem2~ and ~problem3~, and create all the
-  figures in the [[./output]] directory:
+  [[runall.sh]] will build ~problem2~ and ~problem3~, and run a sequence
+  of commands to create all the figures in the [[./output]] directory:
 #+BEGIN_EXAMPLE
 $ ./runall.sh
 gfortran -fdefault-real-8  -c ode.f03
@@ -105,6 +105,25 @@ sequence of ~h~ values:
    dominated by the precision of the hardware.
    [[./output/conv_test.png]]
 * Problem 3
+The code in [[problem3.f03]] expects 2 parameters:
+- method (~--rk~ for Runge-Kutta or ~--lf~ for Leapfrog)
+- step size
+The output has the following 6 columns:
+#+BEGIN_EXAMPLE
+<t> <x> <y> <x'> <y'> <e>
+#+END_EXAMPLE
+Column ~<e>~ contains the calculated value of the Hamiltonian. Since
+the Hamiltonian does not explicitly depend on time, it must be
+time-invariant. Thus if the total energy changes, it is due to
+numerical and hardware errors. The magnitude of these errors can be
+seen in the graphs below where ~E(t) - <E(t)>~ (the difference between
+the energy and the time-average of energy) is plotted. As expected,
+RK4 has generally lower errors (at least for reasonable step
+sizes). Surprisingly, both methods have a spike in the error when
+~h=0.1~. Overall, both methods are well-behaved with Leapfrog again
+exhibiting the tendency for amplitude stability when the step size is
+high.
+
 [[./output/orbit_Leapfrog_step_0.01.png]]
 [[./output/orbit_Runge-Kutta_step_0.01.png]]
 [[./output/orbit_Leapfrog_step_0.03.png]]
