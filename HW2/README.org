@@ -86,7 +86,7 @@ sequence of ~h~ values:
    [[./output/cos_comparison_step_0.30.png]]
    [[./output/cos_comparison_step_1.00.png]]
 ** Part (b)
-   The steps used to produce this graph were negative powers of 2
+   The steps used to produce this graph were powers of 2
    starting from ~2^-15~ up to ~2^1~ as can be seen from the
    horizontal axis. Using steps sizes not representable as floating
    point numbers (e.g., 0.03) breaks the expected convergence pattern
