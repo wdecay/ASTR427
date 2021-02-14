@@ -22,7 +22,9 @@ set multiplot
 set parametric
 plot [0:2*pi] a*(cos(t)-e), b*sin(t) linestyle 1 notitle
 unset parametric
+
+set object circle at 0,0 front radius char 1 \
+    fillcolor rgb 'orange' fillstyle solid noborder
+
 plot data using (0):(0):(a*(cos($2)-e)):(b*sin($2)) with vectors linestyle 2 notitle
 
-set object circle at 0,0 radius char 1 \
-    fillcolor rgb 'red' fillstyle solid noborder
