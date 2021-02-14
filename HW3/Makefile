@@ -17,4 +17,4 @@ findroot.mod : findroot.f03
 
 .PHONY: clean
 clean:
-	-rm -f *.o *.mod *.smod problem?
+	-rm -f *.o *.mod *.smod main
