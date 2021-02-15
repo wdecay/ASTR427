@@ -18,8 +18,6 @@ CONTAINS
     IF (PRESENT(debug)) THEN
        verbose = debug
     END IF
-    
-    IF (a > b .or. fn(a) * fn(b) > 0) RETURN
 
     IF (fn(a) == 0) THEN
        x = a
@@ -30,6 +28,8 @@ CONTAINS
        x = b
        RETURN
     END IF
+
+    IF (a > b .or. fn(a) * fn(b) > 0) RETURN
 
     d = HUGE(d)
 
@@ -58,8 +58,18 @@ CONTAINS
     LOGICAL, OPTIONAL :: debug
     LOGICAL :: verbose
 
-    IF (a > b .or. fn(a) * fn(b) > 0) THEN
-       x = IEEE_VALUE(x, IEEE_QUIET_NAN)    
+    IF (fn(a) == 0) THEN
+       x = a
+       RETURN
+    END IF
+
+    IF (fn(b) == 0) THEN
+       x = b
+       RETURN
+    END IF
+
+    IF (a > b .OR. fn(a) * fn(b) > 0) THEN
+       x = IEEE_VALUE(x, IEEE_QUIET_NAN)
        RETURN
     END IF
 
@@ -76,7 +86,7 @@ CONTAINS
        
        IF (x < a .OR. x > b) THEN
           x = (a + b) / 2
-          IF (verbose) PRINT *, "# out of bracket: performing bisection"
+          IF (verbose) WRITE(0, *) "# out of bracket: performing bisection"
        END IF
           
        IF (fn(x) * fn(b) < 0) THEN
