@@ -21,21 +21,35 @@ CONTAINS
     
     IF (a > b .or. fn(a) * fn(b) > 0) RETURN
 
-    x_old = x
+    IF (fn(a) == 0) THEN
+       x = a
+       RETURN
+    END IF
+
+    IF (fn(b) == 0) THEN
+       x = b
+       RETURN
+    END IF
+
+    d = HUGE(d)
 
     DO
        x = (a + b) / 2
 
        IF (verbose) PRINT *, x, a, b
        
-       IF (x == x_old) RETURN
-       x_old = x
-       
+       IF (d == b - a) THEN
+          RETURN
+       END IF
+       d = b - a
+       IF (fn(x) == 0) RETURN
+
        IF (fn(x) * fn(b) < 0) THEN
           a = x
        ELSE
           b = x
        END IF
+
     END DO
   END FUNCTION findroot_bs
 

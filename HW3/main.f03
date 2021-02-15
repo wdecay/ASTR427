@@ -76,7 +76,9 @@ PROGRAM root_finding
      e = kepler(1.5, 0.9, n_task - 4, .TRUE.)
   CASE (7, 8)
      dm = 2 * pi / 20
-     ecc = 0.9
+     CALL GET_COMMAND_ARGUMENT(2, arg_str) 
+     READ(arg_str, *) ecc
+     
      DO i = 0, 20
         a = i * dm
         e = kepler(a, ecc, n_task - 6, .FALSE.)
