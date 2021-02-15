@@ -57,6 +57,17 @@ CONTAINS
     END FUNCTION df
 
   END FUNCTION kepler
+
+  SUBROUTINE calculate_orbit(n, ecc, method, quiet)
+    LOGICAL :: quiet
+
+    dm = 2 * pi / n
+    DO i = 0, n - 1
+       a = i * dm
+       e = kepler(a, ecc, method, .FALSE.)
+       IF (.NOT. quiet) PRINT *, a, e, a - e + ecc * SIN(e)
+    END DO
+  END SUBROUTINE calculate_orbit
 END MODULE test_problems
 
 
@@ -67,23 +78,31 @@ PROGRAM root_finding
   CALL GET_COMMAND_ARGUMENT(1, arg_str) 
   READ(arg_str, *) n_task
 
+  CALL GET_COMMAND_ARGUMENT(2, arg_str) 
+  READ(arg_str, *) param
+
+  
   SELECT CASE (n_task)
   CASE (1, 2)
-     x = square_root_finder(3.0, 1.0, 2.0, n_task, .TRUE.)
+     x = square_root_finder(param, 0.0, MAX(param, 1.0), n_task, .TRUE.)
   CASE (3, 4)
-     e = kepler(1.5, 0.5, n_task - 2, .TRUE.)
+     e = kepler(1.5, param, n_task - 2, .TRUE.)
   CASE (5, 6)
-     e = kepler(1.5, 0.9, n_task - 4, .TRUE.)
-  CASE (7, 8)
-     dm = 2 * pi / 20
-     CALL GET_COMMAND_ARGUMENT(2, arg_str) 
-     READ(arg_str, *) ecc
-     
-     DO i = 0, 20
-        a = i * dm
-        e = kepler(a, ecc, n_task - 6, .FALSE.)
-        PRINT *, a, e, a - e + ecc * sin(e)
-     END DO
+     CALL calculate_orbit(20, param, n_task - 4, .FALSE.)
+  CASE (7)
+     WRITE(*, fmt='(A)') "Calculating 50000 orbital positions..."
+     CALL cpu_time(tic)
+     CALL calculate_orbit(50000, param, 1, .TRUE.)
+     CALL cpu_time(toc)
+     t1 = toc - tic
+
+     CALL cpu_time(tic)
+     CALL calculate_orbit(50000, param, 2, .TRUE.)
+     CALL cpu_time(toc)
+     t2 = toc - tic
+
+     WRITE(*, fmt="(A, F5.3, A, F5.3, A)") "Bisection: ", t1, "s; Newton-Raphson: ", t2, "s"
+
   CASE DEFAULT
      ERROR STOP "Unknown task."
   END SELECT

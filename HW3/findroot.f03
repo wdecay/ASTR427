@@ -49,7 +49,6 @@ CONTAINS
        ELSE
           b = x
        END IF
-
     END DO
   END FUNCTION findroot_bs
 
@@ -93,4 +92,3 @@ CONTAINS
     END DO
   END FUNCTION findroot_nr
 END MODULE findroot
-
