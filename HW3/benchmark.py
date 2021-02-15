@@ -3,8 +3,9 @@ import numpy as np
 from scipy.optimize import brentq, bisect
 
 def solve(m):
-    return brentq(lambda x: m - x + 0.9*np.sin(x), 0, 2*np.pi)
-    # return bisect(lambda x: m - x + 0.9*np.sin(x), 0, 2*np.pi)
+    f = lambda x: m - x + 0.9*np.sin(x)
+    return brentq(f, 0, 2*np.pi)
+    # return bisect(f, 0, 2*np.pi)
 
 mm = np.linspace(0, 2*np.pi, 50000, endpoint=False)
 vsolve = np.vectorize(solve)
