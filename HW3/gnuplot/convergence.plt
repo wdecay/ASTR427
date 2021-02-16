@@ -1,4 +1,4 @@
-set terminal png size 600,800
+set terminal png size 700,500
 set output out
 set title "test"
 
