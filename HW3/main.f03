@@ -1,7 +1,7 @@
 MODULE test_problems
   USE findroot
 
-  PARAMETER (pi=4.D0*DATAN(1.D0))
+  PARAMETER (pi=4.0*ATAN(1.0))
 
 CONTAINS
   FUNCTION square_root_finder(a, x_lo, x_hi, method, debug) RESULT(x)

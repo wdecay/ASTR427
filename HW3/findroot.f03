@@ -56,7 +56,7 @@ CONTAINS
     PROCEDURE(f1d) :: fn, dfn
     VALUE :: a, b
     LOGICAL, OPTIONAL :: debug
-    LOGICAL :: verbose
+    LOGICAL :: verbose = .FALSE.
 
     IF (fn(a) == 0) THEN
        x = a
