@@ -13,7 +13,7 @@ stats data2 using 1 nooutput
 stats data2 u (v2=$1) every ::STATS_records-1::STATS_records-1 nooutput
 # show variables all
 
-set logscale y 2
+set logscale y
 
 minvalue = 2**(-60)
 # set ytics 4*yzero,4
