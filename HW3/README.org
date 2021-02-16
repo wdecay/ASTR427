@@ -1,2 +1,6 @@
-* Test
+* Problem 1
+[[file:output/sr_conv.png]]
+[[file:output/kepler_0.5_conv.png]]
+[[file:output/kepler_0.9_conv.png]]
+* Problem 2
 [[./output/keplerian_orbit.svg]]

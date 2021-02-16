@@ -14,8 +14,8 @@ gnuplot -e "e=0.9; data='./output/eccentric_anomaly_bisection.txt'; out='./outpu
 ./main 3 0.9 > ./output/kepler_0.9_bisection.txt
 ./main 4 0.9 > ./output/kepler_0.9_newton.txt
 
-gnuplot -e "data1='./output/sr_bisection.txt'; data2='./output/sr_newton.txt';out='./output/sr_conv.svg'" ./gnuplot/convergence.plt
+gnuplot -e "data1='./output/sr_bisection.txt'; data2='./output/sr_newton.txt';out='./output/sr_conv.png'" ./gnuplot/convergence.plt
 
-gnuplot -e "data1='./output/kepler_0.5_bisection.txt'; data2='./output/kepler_0.5_newton.txt';out='./output/kepler_0.5_conv.svg'" ./gnuplot/convergence.plt
+gnuplot -e "data1='./output/kepler_0.5_bisection.txt'; data2='./output/kepler_0.5_newton.txt';out='./output/kepler_0.5_conv.png'" ./gnuplot/convergence.plt
 
-gnuplot -e "data1='./output/kepler_0.9_bisection.txt'; data2='./output/kepler_0.9_newton.txt';out='./output/kepler_0.9_conv.svg'" ./gnuplot/convergence.plt
+gnuplot -e "data1='./output/kepler_0.9_bisection.txt'; data2='./output/kepler_0.9_newton.txt';out='./output/kepler_0.9_conv.png'" ./gnuplot/convergence.plt

@@ -1,4 +1,4 @@
-set terminal svg size 600,800
+set terminal png size 600,800
 set output out
 set title "test"
 
@@ -11,10 +11,18 @@ stats data1 u (v1=$1) every ::STATS_records-1::STATS_records-1 nooutput
 
 stats data2 using 1 nooutput
 stats data2 u (v2=$1) every ::STATS_records-1::STATS_records-1 nooutput
-
 # show variables all
 
 set logscale y 2
-plot data1 using (abs(v1-$1)) with linespoints linestyle 1 notitle,\
-     data2 using (abs(v2-$1)) with linespoints linestyle 2 notitle
+
+minvalue = 2**(-60)
+# set ytics 4*yzero,4
+set ytics add ("0" minvalue)
+
+# the clamping technique is borrowed from
+# https://koutny.org/2020/10/04/logscale-gnuplot.html
+clamp(x) = (x < minvalue) ? minvalue : x;
+
+plot data1 using (clamp(abs(v1-$1))) with linespoints linestyle 1 notitle,\
+     data2 using (clamp(abs(v2-$1))) with linespoints linestyle 2 notitle
 
