@@ -7,9 +7,9 @@ def solve(m):
     return brentq(f, 0, 2*np.pi)
     # return bisect(f, 0, 2*np.pi)
 
-mm = np.linspace(0, 2*np.pi, 50000, endpoint=False)
+mm = np.linspace(0, 2*np.pi, 100000, endpoint=False)
 vsolve = np.vectorize(solve)
-print("[Python] Calculating 50000 orbital positions...")
+print("[Python] Calculating 100000 orbital positions...")
 tic = time.perf_counter()
 ee = vsolve(mm)
 toc = time.perf_counter()

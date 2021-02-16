@@ -90,9 +90,9 @@ PROGRAM root_finding
   CASE (5, 6)
      CALL calculate_orbit(20, param, n_task - 4, .FALSE.)
   CASE (7)
-     WRITE(*, fmt='(A)') "Calculating 50000 orbital positions..."
+     WRITE(*, fmt='(A)') "Calculating 100000 orbital positions..."
      CALL cpu_time(tic)
-     CALL calculate_orbit(50000, param, 1, .TRUE.)
+     CALL calculate_orbit(100000, param, 1, .TRUE.)
      CALL cpu_time(toc)
      t1 = toc - tic
 
