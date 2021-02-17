@@ -19,3 +19,7 @@ gnuplot -e "data1='./output/sr_bisection.txt'; data2='./output/sr_newton.txt';ou
 gnuplot -e "data1='./output/kepler_0.5_bisection.txt'; data2='./output/kepler_0.5_newton.txt';out='./output/kepler_0.5_conv.png'" ./gnuplot/convergence.plt
 
 gnuplot -e "data1='./output/kepler_0.9_bisection.txt'; data2='./output/kepler_0.9_newton.txt';out='./output/kepler_0.9_conv.png'" ./gnuplot/convergence.plt
+
+
+./main 6 0.96714 > ./output/eccentric_anomaly_halley.txt
+gnuplot -e "e=0.96714; data='./output/eccentric_anomaly_halley.txt'; out='./output/keplerian_orbit_halley.svg'" ./gnuplot/keplerian_orbit.plt

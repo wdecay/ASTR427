@@ -4,3 +4,11 @@
 [[file:output/kepler_0.9_conv.png]]
 * Problem 2
 [[./output/keplerian_orbit.svg]]
+
+| Algorithm/Implementation        | Time, s |
+|---------------------------------+---------|
+| scipy.optimizem.bisect (Python) |   4.510 |
+| scipy.optimize.brentq (Python)  |   1.337 |
+| Bisection (Fortran)             |   0.282 |
+| Newton-Raphson (Fortran)        |   0.061 |
+
