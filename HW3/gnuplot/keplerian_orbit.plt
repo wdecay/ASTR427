@@ -10,7 +10,7 @@ b = sqrt(1-e**2)
 
 set xlabel "a (cos(E)-e)"
 set ylabel "b sin(E)"
-set grid
+unset grid
 set size ratio -1
 set xrange [-a * (1 + e) - a*e*0.05:a*(1 - e) + a*e*0.05]
 set yrange [-1.1*b:1.1*b]
