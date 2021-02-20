@@ -1,6 +1,13 @@
+! Library of numerical root-finding methods. Contains Bisection
+! and Newton-Raphson algorithms.
+!
 MODULE findroot
   USE ieee_arithmetic
-  
+  IMPLICIT NONE
+
+  ! Interface of a pure (no side effects) single-variable function
+  ! y=f(x).
+  !
   INTERFACE
      PURE FUNCTION f1d(x) RESULT(y)
        VALUE :: x
@@ -8,12 +15,27 @@ MODULE findroot
   END INTERFACE
 
 CONTAINS
+
+  ! Finds zero of a function within an interval using bisection.
+  !
+  ! Arguments:
+  !   fn: pure single-variable callback function
+  !   a: lower bound of the bracketing interval
+  !   b: upper bound of the bracketing interval
+  !   debug: Optional. Set to .TRUE. to print debug information.
+  !
+  ! Returns: A value of x within [a, b] for which fn(x) = 0 (up to
+  !          round-off error).
+  !
   FUNCTION findroot_bs(fn, a, b, debug) RESULT(x)
     PROCEDURE(f1d) :: fn
     LOGICAL, OPTIONAL :: debug
     LOGICAL :: verbose = .FALSE.
-    VALUE :: a, b
-    x = IEEE_VALUE(x, IEEE_QUIET_NAN)
+    REAL, VALUE :: a, b
+    REAL x, d
+    
+    x = IEEE_VALUE(x, IEEE_QUIET_NAN) ! Default to NaN if unable to
+                                      ! solve.
 
     IF (PRESENT(debug)) THEN
        verbose = debug
@@ -52,11 +74,25 @@ CONTAINS
     END DO
   END FUNCTION findroot_bs
 
+  ! Finds zero of a function within an interval using Newton-Raphson
+  ! algorithm.
+  !
+  ! Arguments:
+  !   fn: pure single-variable callback function; f(x)
+  !   dfn: pure single-variable callback function; f'(x)
+  !   a: lower bound of the bracketing interval
+  !   b: upper bound of the bracketing interval
+  !   debug: Optional. Set to .TRUE. to print debug information.
+  !
+  ! Returns: A value of x within [a, b] for which fn(x) = 0 (up to
+  !          round-off error).
+  !
   FUNCTION findroot_nr(fn, dfn, a, b, debug) RESULT(x)
     PROCEDURE(f1d) :: fn, dfn
-    VALUE :: a, b
+    REAL, VALUE :: a, b
     LOGICAL, OPTIONAL :: debug
     LOGICAL :: verbose = .FALSE.
+    REAL x, dx, w
 
     IF (fn(a) == 0) THEN
        x = a

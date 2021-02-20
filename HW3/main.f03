@@ -1,11 +1,45 @@
+! Problems 1 and 2:
+! - Calculation of quare roots
+! - Numerical solution of  Kepler's equation
+!
+! Discussion:
+!
+!   Some of the code was placed into the module called test_problems.
+!   This was done to take advantage of the internal subprograms which
+!   are only allowed if the containing function or subroutine belongs
+!   to a module. In modern Fortran, internal subprograms allow for
+!   closure-like constructs where the parameters of the host function
+!   are accessible in the contained internal subprograms. If the
+!   compiler supports Fortran 2008 standard, internal subprograms can
+!   be passed as actual arguments (callbacks) to other functions. Thus
+!   running this code requires that gfortran be no older than version
+!   4.6 For other compilers refer to:
+!   http://fortranwiki.org/fortran/show/Fortran+2008+status (see
+!   `Internal procedure as an actual argument`)
+!
 MODULE test_problems
   USE findroot
 
-  PARAMETER (pi=4.0*ATAN(1.0))
+  PARAMETER (pi=4.0*ATAN(1.0)) ! Fortran doesn't provide Pi; instead
+                               ! it's commonly defined this way.
 
 CONTAINS
+
+  ! Computes the square root of a number using either bisection or
+  ! Newton-Raphson method.
+  !
+  ! Arguments:
+  !  a: parameter `a` in equation x**2 - a = 0
+  !  x_lo: lower bound for square root search
+  !  x_hi: higher bound for square root search
+  !  method: 1 for Bisection, 2 for Newton-Raphson
+  !  debug: Set to .TRUE. to print debug information.
+  !
+  ! Returns: The square root of `a` obtained numerically via one of
+  !          the two methods.
+  !
   FUNCTION square_root_finder(a, x_lo, x_hi, method, debug) RESULT(x)
-    VALUE :: a, x_lo, x_hi
+    INTENT(in) :: a, x_lo, x_hi, method, debug
     LOGICAL :: debug
 
     SELECT CASE (method)
@@ -16,25 +50,43 @@ CONTAINS
     CASE DEFAULT
        ERROR STOP "Unknown method"
     END SELECT
-
+    
   CONTAINS ! internal subprograms
-    ! http://fortranwiki.org/fortran/show/Fortran+2008+status
+
+    ! Function definition; y = x**2 - a
+    !
     PURE FUNCTION f(x) RESULT(y)
       VALUE :: x
       y = x**2 - a
     END FUNCTION f
-    
+
+    ! Derivative definition; y = 2x (only used by Newton-Raphson)
+    !
     PURE FUNCTION df(x) RESULT(y)
       VALUE :: x
       y = 2*x
     END FUNCTION df
   END FUNCTION square_root_finder
 
-  
+  ! Solves the Kepler's equation using either bisection or
+  ! Newton-Raphson method.
+  !
+  ! Arguments:
+  !
+  !  w: mean anomaly (M). Note: in this module implicit types were
+  !  used to reduce the amount of boilerplate code. In Fortran, m is
+  !  assigned the INTEGER type, whereas w is REAL. There may be a few
+  !  other places where similar name substitutions are made for the
+  !  same reason.
+  !  e: eccentricity of the orbit
+  !  method: 1 for Bisection, 2 for Newton-Raphson
+  !  debug: Set to .TRUE. to print debug information.
+  !
+  ! Returns: Eccentric anomaly for the given values of w (or M) and e.
+  !  
   FUNCTION kepler(w, e, method, debug) RESULT(x)
-    VALUE :: w, e
+    INTENT(in) :: w, e, method, debug
     LOGICAL :: debug
-    ! PARAMETER (pi=4.D0*DATAN(1.D0))
     
     SELECT CASE (method)
        CASE (1)
@@ -45,12 +97,17 @@ CONTAINS
           ERROR STOP "Unknown method"
        END SELECT
 
-  CONTAINS
+  CONTAINS ! internal subprograms
+
+    ! Function definition
+    !
     PURE FUNCTION f(x) RESULT(y)
       VALUE :: x
       y = w - x + e*SIN(x)
     END FUNCTION f
-    
+
+    ! Derivative definition (only used by Newton-Raphson)
+    !    
     PURE FUNCTION df(x) RESULT(y)
       VALUE :: x
       y = -1.0 + e*COS(x)
@@ -58,19 +115,44 @@ CONTAINS
 
   END FUNCTION kepler
 
-  SUBROUTINE calculate_orbit(n, ecc, method, quiet)
+  ! Calculates the eccentric anomaly for `n` equally spaced values of
+  ! the mean anomaly using either bisection of Newton-Raphson method.
+  !
+  ! Arguments:
+  !  n: number mean anomaly values in the interval [0, 2pi] to use
+  !  e: eccentricity of the orbit
+  !  method: 1 for Bisection, 2 for Newton-Raphson
+  !  quiet: Set to .TRUE. to suppress output
+  !  
+  SUBROUTINE calculate_orbit(n, e, method, quiet)
     LOGICAL :: quiet
+    INTENT(in) :: n, e, method, quiet
 
-    dm = 2 * pi / n
+    dm = 2 * pi / n ! mean anomaly increment
     DO i = 0, n - 1
-       a = i * dm
-       e = kepler(a, ecc, method, .FALSE.)
-       IF (.NOT. quiet) PRINT *, a, e, a - e + ecc * SIN(e)
+       a = i * dm ! current value of the mean anomaly
+       x = kepler(a, e, method, .FALSE.)
+       IF (.NOT. quiet) PRINT *, a, x, a - x + e * SIN(x)
     END DO
   END SUBROUTINE calculate_orbit
 END MODULE test_problems
 
-
+! Main program
+! Takes two parameters:
+! $ ./main <n_task:INTEGER> <param:REAL>
+! According to the value of `n_task` does the following:
+! 1: computes the square root of `param` using bisection
+! 2: computes the square root of `param` using Newton-Raphson
+! 3: solves Kepler's equation for M=1.5 and e=`param` via bisection
+! 4: solves Kepler's equation for M=1.5 and e=`param` via
+!    Newton-Raphson
+! 5: solves Kepler's equation for 20 equally spaced M and e=`param`
+!    via bisection
+! 6: solves Kepler's equation for 20 equally spaced M and e=`param`
+!    via Newton-Raphson
+! 7: Runs a simple performance benchmark for bisection and
+!    Newton-Raphson by computing 100000 mean anomalies with each method
+!
 PROGRAM root_finding
   USE test_problems
   CHARACTER(100) :: arg_str
@@ -97,7 +179,7 @@ PROGRAM root_finding
      t1 = toc - tic
 
      CALL cpu_time(tic)
-     CALL calculate_orbit(50000, param, 2, .TRUE.)
+     CALL calculate_orbit(100000, param, 2, .TRUE.)
      CALL cpu_time(toc)
      t2 = toc - tic
 
