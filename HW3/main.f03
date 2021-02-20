@@ -1,19 +1,21 @@
 ! Problems 1 and 2:
 ! - Calculation of quare roots
-! - Numerical solution of  Kepler's equation
+! - Numerical solution of Kepler's equation
 !
 ! Discussion:
 !
 !   Some of the code was placed into the module called test_problems.
-!   This was done to take advantage of the internal subprograms which
+!   This was done to take advantage of the internal procedures which
 !   are only allowed if the containing function or subroutine belongs
-!   to a module. In modern Fortran, internal subprograms allow for
+!   to a module. In modern Fortran, internal procedures allow for
 !   closure-like constructs where the parameters of the host function
-!   are accessible in the contained internal subprograms. If the
-!   compiler supports Fortran 2008 standard, internal subprograms can
-!   be passed as actual arguments (callbacks) to other functions. Thus
-!   running this code requires that gfortran be no older than version
-!   4.6 For other compilers refer to:
+!   are accessible in the contained internal procedures. If the
+!   compiler supports Fortran 2008 standard, internal procedures can
+!   be passed as actual arguments (callbacks) to other functions,
+!   which enables elegant callback parametrization.  Compiling this
+!   code requires that gfortran be no older than version 4.6
+!   (https://gcc.gnu.org/wiki/GFortran/News#gfortran_4.6). For other
+!   compilers refer to
 !   http://fortranwiki.org/fortran/show/Fortran+2008+status (see
 !   `Internal procedure as an actual argument`)
 !
@@ -51,7 +53,7 @@ CONTAINS
        ERROR STOP "Unknown method"
     END SELECT
     
-  CONTAINS ! internal subprograms
+  CONTAINS ! internal precedures
 
     ! Function definition; y = x**2 - a
     !
@@ -97,7 +99,7 @@ CONTAINS
           ERROR STOP "Unknown method"
        END SELECT
 
-  CONTAINS ! internal subprograms
+  CONTAINS ! internal procedures
 
     ! Function definition
     !
