@@ -9,6 +9,6 @@
 |---------------------------------+---------|
 | scipy.optimizem.bisect (Python) |   4.510 |
 | scipy.optimize.brentq (Python)  |   1.337 |
-| Bisection (Fortran)             |   0.282 |
-| Newton-Raphson (Fortran)        |   0.061 |
+| Bisection (Fortran)             |   0.277 |
+| Newton-Raphson (Fortran)        |   0.093 |
 
