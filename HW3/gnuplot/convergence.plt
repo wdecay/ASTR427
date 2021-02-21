@@ -17,7 +17,7 @@ stats data2 u (v2=$1) every ::STATS_records-1::STATS_records-1 nooutput
 
 set logscale y
 
-minvalue = 2**(-60)
+minvalue = 1e-18
 # set ytics 4*yzero,4
 set ytics add ("0" minvalue)
 

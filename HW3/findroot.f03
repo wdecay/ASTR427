@@ -117,6 +117,11 @@ CONTAINS
 
     w = IEEE_VALUE(x, IEEE_QUIET_NAN)
     DO
+       IF (verbose) PRINT *, x, a, b, dx
+
+       IF (w == b - a) RETURN
+       w = b - a
+
        dx = fn(x) / dfn(x)
        x = x - dx
        
@@ -130,11 +135,6 @@ CONTAINS
        ELSE   
           b = x
        END IF
-
-       IF (verbose) PRINT *, x, a, b, dx
-
-       IF (w == b - a) RETURN
-       w = b - a
     END DO
   END FUNCTION findroot_nr
 END MODULE findroot
