@@ -153,7 +153,8 @@ END MODULE test_problems
 ! 6: solves Kepler's equation for 20 equally spaced M and e=`param`
 !    via Newton-Raphson
 ! 7: Runs a simple performance benchmark for bisection and
-!    Newton-Raphson by computing 100000 mean anomalies with each method
+!    Newton-Raphson by computing 100000 mean anomalies with each
+!    method; e=`param`
 !
 PROGRAM root_finding
   USE test_problems
@@ -168,7 +169,8 @@ PROGRAM root_finding
   
   SELECT CASE (n_task)
   CASE (1, 2)
-     x = square_root_finder(param, 0.0, MAX(param, 1.0), n_task, .TRUE.)
+     x = square_root_finder(param, MIN(param, 1.0), MAX(param, 1.0), n_task, .TRUE.)
+     PRINT *, "# Result: ", x
   CASE (3, 4)
      e = kepler(1.5, param, n_task - 2, .TRUE.)
   CASE (5, 6)

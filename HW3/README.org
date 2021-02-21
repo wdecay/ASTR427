@@ -1,7 +1,22 @@
 * Problem 1
+** Part (a)
+To calculate the square root of a number, run
+#+BEGIN_EXAMPLE
+$ ./main <method> <number>
+#+END_EXAMPLE
+where ~<method>~ can be either 1 or 2, corresponding, respectively to
+bisection and Newton-Raphson algorithms. Refer to comments in
+[[file:main.f03]] for further details on the command line parameters.
+
+The output of the program when calculating the square root of 2:
+| Algorithm      | Output                       |
+|----------------+------------------------------|
+| Bisection      | [[file:output/sr_bisection.txt]] |
+| Newton-Raphson | [[file:output/sr_newton.txt]]    |
+
+
 [[file:output/sr_conv.png]]
-[[file:output/kepler_0.5_conv.png]]
-[[file:output/kepler_0.9_conv.png]]
+[[file:output/kepler_0.5_conv.png]] [[file:output/kepler_0.9_conv.png]]
 * Problem 2
 [[./output/keplerian_orbit.svg]]
 
