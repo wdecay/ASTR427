@@ -173,6 +173,7 @@ PROGRAM root_finding
      PRINT *, "# Result: ", x
   CASE (3, 4)
      e = kepler(1.5, param, n_task - 2, .TRUE.)
+     PRINT *, "# Result: ", e
   CASE (5, 6)
      CALL calculate_orbit(20, param, n_task - 4, .FALSE.)
   CASE (7)
