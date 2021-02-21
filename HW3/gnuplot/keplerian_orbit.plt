@@ -3,7 +3,7 @@ set output out
 set title "Elliptical orbit"
 
 set style line 1 dt 3 linewidth 2 lc rgb '#0060ad' 
-set style line 2 linecolor rgb '#555555' linetype 1 linewidth 1
+set style line 2 linecolor rgb '#222222' linetype 1 linewidth 1
 
 a = 1
 b = sqrt(1-e**2)
