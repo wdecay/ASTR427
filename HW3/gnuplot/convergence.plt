@@ -1,6 +1,8 @@
 set terminal png size 700,500
 set output out
-set title "test"
+set title sprintf("Convergence (%s)", subtitle)
+set xlabel "Iteration"
+set ylabel "Error, |x_c - x_f|" enhanced
 
 set style line 1 linecolor rgb '#0060ad' linetype 1 linewidth 2
 set style line 2 linecolor rgb '#dd181f' linetype 1 linewidth 1
@@ -23,6 +25,6 @@ set ytics add ("0" minvalue)
 # https://koutny.org/2020/10/04/logscale-gnuplot.html
 clamp(x) = (x < minvalue) ? minvalue : x;
 
-plot data1 using (clamp(abs(v1-$1))) with linespoints linestyle 1 notitle,\
-     data2 using (clamp(abs(v2-$1))) with linespoints linestyle 2 notitle
+plot data1 using (clamp(abs(v1-$1))) with linespoints linestyle 1 title "Bisection",\
+     data2 using (clamp(abs(v2-$1))) with linespoints linestyle 2 title "Newton-Raphson"
 

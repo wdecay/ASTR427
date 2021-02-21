@@ -2,9 +2,9 @@
 ** Part (a)
 To calculate the square root of a number, run
 #+BEGIN_EXAMPLE
-$ ./main <method> <number>
+$ ./main <n_task> <number>
 #+END_EXAMPLE
-where ~<method>~ can be either 1 or 2, corresponding, respectively to
+where ~<n_task>~ can be either 1 or 2, corresponding, respectively, to
 bisection and Newton-Raphson algorithms. Refer to comments in
 [[file:main.f03]] for further details on the command line parameters.
 
@@ -14,9 +14,54 @@ The output of the program when calculating the square root of 2:
 | Bisection      | [[file:output/sr_bisection.txt]] |
 | Newton-Raphson | [[file:output/sr_newton.txt]]    |
 
+The columns in the output provide the following per-iteration
+debugging information:
+#+BEGIN_EXAMPLE
+<current estimate> <lower bracket> <upper bracket> <f(x)/f'(x)>
+#+END_EXAMPLE
 
+(The last column only appears in the Newton-Raphson output.) This
+output will be used to demonstrate convergence of the two methods.
+
+Note that the final result is slightly different between bisection and
+Netwon-Raphson when calculating the sqare root. ~sqrt(2.0)~ is not
+exactly representable as a floating-point number (or any number
+decimal number since it is irrational), but both results are within
+the round-off error from the actual value.
+
+In the convergence plot below, ~|x_c - x_f|~ is the absolute value of
+the difference between the current iteration estimate and the final
+result.
 [[file:output/sr_conv.png]]
-[[file:output/kepler_0.5_conv.png]] [[file:output/kepler_0.9_conv.png]]
+
+** Part (b)
+To calculate the eccentric anomaly for a given value of ~e~ (with
+~M=1.5~), run
+#+BEGIN_EXAMPLE
+$ ./main <n_task> <e>
+#+END_EXAMPLE
+where ~<n_task>~ can be either 3 or 4, corresponding, respectively, to
+bisection and Newton-Raphson algorithms.
+
+The output of the program when solving the Kepler's equation for
+~M=1.5~ and ~e=0.5~:
+| Algorithm      | Output                               |
+|----------------+--------------------------------------|
+| Bisection      | [[file:output/kepler_0.5_bisection.txt]] |
+| Newton-Raphson | [[file:output/kepler_0.5_newton.txt]]    |
+
+The output of the program when solving the Kepler's equation for
+~M=1.5~ and ~e=0.9~:
+| Algorithm      | Output                               |
+|----------------+--------------------------------------|
+| Bisection      | [[file:output/kepler_0.9_bisection.txt]] |
+| Newton-Raphson | [[file:output/kepler_0.9_newton.txt]]    |
+
+Convergence plots for each value of ~e~ (produced completely
+analogously to the one for square root) are provided below.
+
+[[file:output/kepler_0.5_conv.png]]
+[[file:output/kepler_0.9_conv.png]]
 * Problem 2
 [[./output/keplerian_orbit.svg]]
 
