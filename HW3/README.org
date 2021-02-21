@@ -63,7 +63,8 @@ analogously to the one for square root) are provided below.
 [[file:output/kepler_0.5_conv.png]]
 [[file:output/kepler_0.9_conv.png]]
 * Problem 2
-[[./output/keplerian_orbit.svg]]
+[[file:output/eccentric_anomaly.png]]
+[[file:output/keplerian_orbit.png]]
 
 | Algorithm/Implementation        | Time, s |
 |---------------------------------+---------|

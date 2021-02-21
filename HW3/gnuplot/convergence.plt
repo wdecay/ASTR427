@@ -1,4 +1,4 @@
-set terminal png size 700,500
+set terminal pngcairo size 700,500
 set output out
 set title sprintf("Convergence (%s)", subtitle)
 set xlabel "Iteration"
