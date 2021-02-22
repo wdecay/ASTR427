@@ -23,4 +23,4 @@ set xlabel "t"
 set ylabel "E - <E>"
 set key top
 set label sprintf("<E> = %.8f  ", STATS_mean) at graph 1.0, 0.9 right front
-plot data using 1:($6 - STATS_mean) smooth csplines linestyle 2 title "Energy fluctuation"
+plot data using 1:($6 - STATS_mean) with lines linestyle 2 title "Energy fluctuation"

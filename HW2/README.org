@@ -120,8 +120,7 @@ numerical and hardware errors. The magnitude of these errors can be
 seen in the graphs below where ~E(t) - <E(t)>~ (the difference between
 the energy and the time-average of energy) is plotted. As expected,
 RK4 has generally lower errors (at least for reasonable step
-sizes). Surprisingly, both methods have a spike in the error when
-~h=0.1~. Overall, both methods are well-behaved with Leapfrog again
+sizes). Overall, both methods are well-behaved with Leapfrog again
 exhibiting the tendency for amplitude stability when the step size is
 high.
 
