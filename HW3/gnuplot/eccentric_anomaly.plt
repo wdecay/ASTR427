@@ -1,6 +1,6 @@
 set terminal pngcairo size 600,600
 set output out
-set title "Eccentric anomaly"
+set title sprintf("Eccentric anomaly, %s", subtitle)
 
 set style line 1 dt 3 linewidth 2 lc rgb '#0060ad' 
 set style line 2 linecolor rgb '#222222' linetype 1 linewidth 1

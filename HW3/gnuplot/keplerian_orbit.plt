@@ -1,6 +1,6 @@
 set terminal pngcairo size 400/sqrt(1-e**2), 450
 set output out
-set title "Elliptical orbit"
+set title sprintf("Orbit, %s", subtitle)
 
 set style line 1 dt 3 linewidth 2 lc rgb '#0060ad' 
 set style line 2 linecolor rgb '#222222' linetype 1 linewidth 1

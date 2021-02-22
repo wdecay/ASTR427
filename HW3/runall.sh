@@ -11,7 +11,8 @@ make
 ./main 3 0.9 > ./output/kepler_0.9_bisection.txt
 ./main 4 0.9 > ./output/kepler_0.9_newton.txt
 
-./main 6 0.9 > ./output/eccentric_anomaly_bisection.txt
+# use 5 for Bisection, 6 for Newton-Raphson
+./main 6 0.9 > ./output/eccentric_anomaly_0.9.txt
 ./main 6 0.96714 > ./output/eccentric_anomaly_halley.txt
 
 gnuplot -e "data1='./output/sr_bisection.txt'; data2='./output/sr_newton.txt';\
@@ -23,11 +24,11 @@ out='./output/kepler_0.5_conv.png';subtitle='Kepler''s equation, e=0.5'" ./gnupl
 gnuplot -e "data1='./output/kepler_0.9_bisection.txt'; data2='./output/kepler_0.9_newton.txt';\
 out='./output/kepler_0.9_conv.png';subtitle='Kepler''s equation, e=0.9'" ./gnuplot/convergence.plt
 
-gnuplot -e "e=0.9; data='./output/eccentric_anomaly_bisection.txt';\
-out='./output/eccentric_anomaly.png'" ./gnuplot/eccentric_anomaly.plt
+gnuplot -e "e=0.9; data='./output/eccentric_anomaly_0.9.txt';\
+out='./output/eccentric_anomaly_0.9.png';subtitle='e=0.9'" ./gnuplot/eccentric_anomaly.plt
 
-gnuplot -e "e=0.9; data='./output/eccentric_anomaly_bisection.txt';\
-out='./output/keplerian_orbit.png'" ./gnuplot/keplerian_orbit.plt
+gnuplot -e "e=0.9; data='./output/eccentric_anomaly_0.9.txt';\
+out='./output/keplerian_orbit_0.9.png';subtitle='e=0.9'" ./gnuplot/keplerian_orbit.plt
 
 gnuplot -e "e=0.96714; data='./output/eccentric_anomaly_halley.txt';\
-out='./output/keplerian_orbit_halley.png'" ./gnuplot/keplerian_orbit.plt
+out='./output/keplerian_orbit_halley.png';subtitle='e=0.96714'" ./gnuplot/keplerian_orbit.plt
