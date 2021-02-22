@@ -115,5 +115,5 @@ of ~scipy.optimize.newton~ was significantly worse than that of
 | Bisection (Fortran)             |   0.277 |
 | Newton-Raphson (Fortran)        |   0.093 |
 
-No deliberate care was taken to achieve high performance the Fortran
-implementations. There's likely still some room for improvement!
+No deliberate care was taken to achieve high performance of the Fortran
+implementations. There's likely still room for improvement!
