@@ -92,7 +92,7 @@ CONTAINS
     REAL, VALUE :: a, b
     LOGICAL, OPTIONAL :: debug
     LOGICAL :: verbose = .FALSE.
-    REAL x, dx, w
+    REAL x, w
 
     IF (fn(a) == 0) THEN
        x = a
@@ -117,14 +117,13 @@ CONTAINS
 
     w = IEEE_VALUE(x, IEEE_QUIET_NAN)
     DO
-       IF (verbose) PRINT *, x, a, b, dx
+       IF (verbose) PRINT *, x, a, b
 
        IF (w == b - a) RETURN
        w = b - a
 
-       dx = fn(x) / dfn(x)
-       x = x - dx
-       
+       x = x - fn(x) / dfn(x)
+              
        IF (x < a .OR. x > b) THEN
           x = (a + b) / 2
           IF (verbose) WRITE(0, *) "# out of bracket: performing bisection"
@@ -132,7 +131,7 @@ CONTAINS
           
        IF (fn(x) * fn(b) < 0) THEN
           a = x
-       ELSE   
+       ELSE
           b = x
        END IF
     END DO

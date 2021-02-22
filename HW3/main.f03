@@ -177,14 +177,15 @@ PROGRAM root_finding
   CASE (5, 6)
      CALL calculate_orbit(20, param, n_task - 4, .FALSE.)
   CASE (7)
-     WRITE(*, fmt='(A)') "Calculating 100000 orbital positions..."
+     n = 100000
+     WRITE(*, fmt='(A, I6, A)') "Calculating ", n, " orbital positions..."
      CALL cpu_time(tic)
-     CALL calculate_orbit(100000, param, 1, .TRUE.)
+     CALL calculate_orbit(n, param, 1, .TRUE.)
      CALL cpu_time(toc)
      t1 = toc - tic
 
      CALL cpu_time(tic)
-     CALL calculate_orbit(100000, param, 2, .TRUE.)
+     CALL calculate_orbit(n, param, 2, .TRUE.)
      CALL cpu_time(toc)
      t2 = toc - tic
 
