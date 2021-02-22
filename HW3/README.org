@@ -1,3 +1,15 @@
+* General notes
+  All root-finding routines are placed in the [[file:findroot.f03]]
+  module. Both problems (the client code) are implemented within the
+  same file, [[file:main.f03]] (see the comment to the main program for
+  the calling convention and parameters). The creation of artifacts in
+  [[file:output/]] is orchestrated by the shell script [[runall.sh]], which
+  builds the executable (~main~), calls it with appropriate parameters
+  and forwards the results to ~gnuplot~. (The ~gnuplot~ code for the 3
+  types of figures is provided in [[./gnuplot]].)
+  
+  Refer to the /discussion/ in the header of [[file:main.f03]] for
+  additional information on the compiler support.
 * Problem 1
 ** Part (a)
 To calculate the square root of a number, run
@@ -63,10 +75,34 @@ analogously to the one for square root) are provided below.
 [[file:output/kepler_0.5_conv.png]]
 [[file:output/kepler_0.9_conv.png]]
 * Problem 2
+Calculations of the eccentric anomaly for an orbit with ~e=0.9~ using
+the bisection and Newton-Raphson methods produced numerically
+identical results (with very minor discrepancies within the round-off
+error which had absolutely no effect on the produced plot). (The plot
+below was generated via Newton-Raphson.)
 [[file:output/eccentric_anomaly_0.9.png]]
+
+It is easy to express the true anomaly in terms of the eccentric
+anomaly and visualize the orbit. In the plot below the semi-major
+axis, ~a~, is set to 1 and the semi-minor axis, ~b~ is calculated
+accordingly. It is evident that Kepler's 2nd law holds: the areas of
+the segments between the position vectors are equal; they correspond
+to the equal time intervals along the orbit.
 [[file:output/keplerian_orbit_0.9.png]]
 
+Here's a visualization of the orbit of Halley's Comet with an even
+greater eccentricity. Since its orbital period is about 75 years, it
+spends roughly 3 years and 9 months traversing each segment.
 [[file:output/keplerian_orbit_halley.png]]
+
+Finally, below is a rather crude comparison of the performance among
+different algorithms and implementations. Each algorithm was used to
+compute 100000 eccentric anomalies corresponding to equally spaced
+mean anomalies along an orbit with ~e=0.9~. A reasonably /pythonic/
+implementation using library functions used in this test can be found
+in [[file:benchmark.py]]. It is notable that the performance of
+~scipy.optimize.newton~ was significantly worse than that of
+~scipy.optimize.bisect~.
 
 | Algorithm/Implementation        | Time, s |
 |---------------------------------+---------|
@@ -75,3 +111,5 @@ analogously to the one for square root) are provided below.
 | Bisection (Fortran)             |   0.277 |
 | Newton-Raphson (Fortran)        |   0.093 |
 
+No deliberate care was taken to achieve high performance the Fortran
+implementations. There's likely still some room for improvement!
