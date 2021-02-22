@@ -1,3 +1,4 @@
+# This is a performance test.
 import time
 import numpy as np
 from scipy.optimize import brentq, bisect
