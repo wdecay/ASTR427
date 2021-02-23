@@ -79,7 +79,10 @@ Calculations of the eccentric anomaly for an orbit with ~e=0.9~ using
 the bisection and Newton-Raphson methods produced numerically
 identical results (with very minor discrepancies within the round-off
 error which had absolutely no effect on the produced plot). (The plot
-below was generated via Newton-Raphson.)
+below was generated via Newton-Raphson from the output in 
+[[file:output/eccentric_anomaly_0.0.txt]], where the first column 
+is the mean anomaly, the second column is the eccentric anomaly and the third column
+is the value of ~M-E+e*sin(E)~.)
 
 [[file:output/eccentric_anomaly_0.9.png]]
 
