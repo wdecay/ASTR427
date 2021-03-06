@@ -1,6 +1,6 @@
 .SUFFIXES:
 FC=gfortran
-CFLAGS=-fdefault-real-8 -Wall -O3 -g
+CFLAGS=-fdefault-real-8 -Wall -O3 #-g
 
 all: main
 

@@ -1,5 +1,5 @@
 FC = gfortran
-CFLAGS = -g -std=legacy
+CFLAGS =-std=legacy #-g
 AR=ar
 ARFLAGS=cr
 OBJS=bigden.o biglag.o newuoa.o newuob.o trsapp.o update.o
