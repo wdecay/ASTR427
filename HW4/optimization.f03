@@ -15,7 +15,7 @@ CONTAINS
   FUNCTION gss(fn, a, c) RESULT(x)
     PROCEDURE(f1d) :: fn
     REAL, VALUE :: a, c
-    REAL :: x, b, fa, fc, fb, fx
+    REAL :: x, b, fa, fb, fx, fc
 
     x = IEEE_VALUE(x, IEEE_QUIET_NAN) ! Default to NaN if unable to
                                       ! solve.

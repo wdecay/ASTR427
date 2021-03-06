@@ -19,13 +19,36 @@ optimization.mod : optimization.f03
 dataio.mod : dataio.f03
 	$(FC) $(CFLAGS) -c dataio.f03
 
-libnewuoa: force
-	cd newuoa && make
+.PHONY: libnewuoa
+libnewuoa:
+	$(MAKE) -C newuoa
 
 .PHONY: clean
 clean:
 	-rm -f *.o *.mod *.smod main
 	cd newuoa && make clean
 
-force:
-	true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

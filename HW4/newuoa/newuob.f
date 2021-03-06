@@ -320,7 +320,7 @@ C
      1      ' called MAXFUN times.')
           GOTO 530
       END IF
-      CALL CALFUN (N,X,F)
+      F = CALFUN (N,X)
       IF (IPRINT .EQ. 3) THEN
           PRINT 330, NF,F,(X(I),I=1,N)
   330      FORMAT (/4X,'Function number',I6,'    F =',1PD18.10,
