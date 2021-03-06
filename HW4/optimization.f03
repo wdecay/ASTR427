@@ -31,7 +31,10 @@ CONTAINS
     IF (.NOT. (fx > fb .AND. fa > fb .OR. fb > fx .AND. fc > fx)) RETURN
 
     DO
-       IF (ABS(c - a) <= tol * (ABS(x) + ABS(b))) EXIT
+       IF (ABS(c - a) <= tol * (ABS(x) + ABS(b))) THEN
+          IF (fx > fb) x = b ! otherwise x is already set
+          EXIT
+       END IF
        
        IF (fx > fb) THEN ! new bracket (a, b, x), ab is the larger
                          ! interval
@@ -41,7 +44,7 @@ CONTAINS
           x = b
           fx = fb
           
-          b = a + r * (x - a)
+          b = a + r * (c - a)
           fb = fn(b)
        ELSE ! new bracket (b, x, c), xc is the larger interval
           a = b
@@ -53,6 +56,8 @@ CONTAINS
           x = b + r * (c - b)
           fx = fn(x)
        END IF
+
+       ! PRINT *, (b - a)/(c - a), (x - b)/(x - a)
     END DO
   END FUNCTION gss
 END MODULE optimization
