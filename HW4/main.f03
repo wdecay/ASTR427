@@ -6,7 +6,7 @@ PROGRAM rot_curve
 
   REAL, PARAMETER :: vinf = 100
   REAL, dimension(:, :), allocatable, TARGET :: tbl
-  REAL :: x(2), rhobeg=0.2, rhoend=1.0e-8, xmin, v
+  REAL :: x(2), rhobeg=0.2, rhoend=1.0e-8, xmin
   INTEGER :: n = 2, w(200), npt=5, iprint=0, maxfun=5000, n_task = 0, i, j, ios
   CHARACTER(100) :: arg_str
 
@@ -28,10 +28,9 @@ PROGRAM rot_curve
      CALL newuoa(fn2d, n, npt, x, rhobeg, rhoend, iprint, maxfun, w)
      PRINT *, x, fn2d(SIZE(x), x)
   CASE (3)
-     DO j = 0, 35, 1
-        v = 95.0 + j
-        PRINT *, (fn2d(2, [v, i*0.1]), i=30,60,1)
-      END DO
+     DO i = 0,35
+        PRINT *, (fn2d(2, [95.0 + i, j * 0.1]), j = 30,60)
+     END DO
   END SELECT
 
   DEALLOCATE(tbl)
