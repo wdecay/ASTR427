@@ -15,8 +15,11 @@ extract numbers from an output file). ~runall.sh~ will save the
 data files and plots in the [[file:output/]] directory.
 
 * Problem 1
-[[file:optimization.f03]]
+The implementation of the Golden Section Search (GSS) algorithm can be
+found in [[file:optimization.f03]].
 * Problems 2 and 3
+Below is the the output of the rotation curve fitting code (see
+[[file:main.f03]]).
 #+BEGIN_EXAMPLE
 $ ./main 1
           Method            Vinf              R0       LSQ error
@@ -24,5 +27,24 @@ $ ./main 1
              GSS     100.0000000       3.3303781     530.8484105
           NEWUOA     110.7799056       4.1643865     425.8798929
 #+END_EXAMPLE
+** Comments on the NEW Unconstrained Optimization Algorithm (NEWUOA)
+Finding a working Fortran nonlinear optimization library was the
+biggest challenge and, perhaps, a testament to the shortcomings of the
+modern Fortran ecosystem with regard to the availability of standard
+high-quality numerical libraries. I initially tried [[https://en.wikipedia.org/wiki/MINPACK][MINPACK]] (~HYBRD1~
+subroutine), but was unable to achieve adequate performance on this
+problem. There exist several non-free libraries with optimization
+capabilities sold for hundreds of dollars, but nothing free and
+well-established turned up in my search.
+
+The NEWOUA optimization module used here (see [[file:newuoa]]) is based on
+the mostly intact Fortran 77 code written by Professor [[https://en.wikipedia.org/wiki/Michael_J._D._Powell][M. J. D. Powell]]
+himself. I fount it at
+https://www.zhangzk.net/software.html#powell_software and made a few
+very minor modifications to simplify the calling convention and
+facilitate the build. This implementation is likely the basis for the
+Powell's minimization method in ~scipy~ since both produce virtually
+identical results.
+
 [[file:output/rot_curve_fits.png]]
 [[file:output/map.png]]

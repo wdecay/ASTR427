@@ -1,4 +1,4 @@
-NEWUOA---a NEW Uonstrained Optimization Algorithm.
+NEWUOA---a NEW Unconstrained Optimization Algorithm.
 Copyright (C) 2004 M. J. D. Powell (University of Cambridge)
 
 This package is free software; you can redistribute it and/or
