@@ -1,5 +1,5 @@
 * General notes
-Runing `make` will produce the `main` binary, which accepts the
+Runing ~make~ will produce the ~main~ binary, which accepts the
 following arguments:
 #+BEGIN_EXAMPLE
 $ ./main
@@ -8,11 +8,11 @@ One parameters is expected:
 2 - compute LSQ function over a 2D grid
 #+END_EXAMPLE
 
-Full automation is provided via `runall.sh` for which the build and
-runtime requirements are: `bash`, `GNU make`, `gfortran`, `gnuplot`,
-`awk` (the latter was used in [[file:gnuplot/rot_curve_fits.plt]] to
-extract numbers from an output file). If all of the above are
-available output files and plots under [[file:output/]] will be generated.
+Full automation is provided via ~runall.sh~ for which the build and
+runtime requirements are: ~bash~, ~GNU make~, ~gfortran~, ~gnuplot~,
+~awk~ (the latter was used in [[file:gnuplot/rot_curve_fits.plt]] to
+extract numbers from an output file). ~runall.sh~ will save the
+data files and plots in the [[file:output/]] directory.
 
 * Problem 1
 [[file:optimization.f03]]
