@@ -66,8 +66,12 @@ noise-induced biases.
 
 [[file:output/rot_curve_fits.png]]
 
-Finally, we can compare the results from GSS and NEWUOA by plotting a
+Finally, we can assess the results from GSS and NEWUOA by plotting a
 heatmap of the least squares function. It is clear that NEWUOA
 converged near the actual global minimum, whereas GSS was unable to do
-so due to the constraint on ~vinf~.
+so due to the constraint on ~vinf~; hence, it converged on the minimum
+across the vertical slice at ~vinf = 100~. The values of the LSQ
+errors shown in the program's output above as well as the optimal
+values are consistent with what would be expected based on this plot.
+
 [[file:output/map.png]]
