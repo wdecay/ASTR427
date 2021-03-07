@@ -54,10 +54,10 @@ below, it is easy to see that the overall bias introduced by the
 Gaussian noise is such that the slope (~vinf/r0~) appears to be less
 steep at low ~r~ than that in the actual model, so we would expect
 that the fits will have ~vinf/r0 < 100/3~. At higher ~r~ (where
-v~vinf) the bias is in favor of higher ~vinf~. Therefore, if the model
-is allowed to adjust ~vinf~, it is reasonable to expect that it will
-produce ~vinf > 100~. These two observations are consistent with the
-results:
+~v~vinf~) the bias is in favor of higher ~vinf~. Therefore, if the
+model is allowed to adjust ~vinf~, it is reasonable to expect that it
+will produce ~vinf > 100~. These two observations are consistent with
+the results:
 - GSS settled for a less steep slope: ~100.00/3.33 < 100/3~
 - NEWUOA settled for both higher ~vinf = 110.78 > 100~ and less steep
   slope ~vinf/r0 = 110.78/4.16 < 100/3~.
