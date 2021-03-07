@@ -1,6 +1,6 @@
 * General notes
 #+BEGIN_EXAMPLE
-./main
+$ ./main
 One parameters is expected: 
 1 - run optimization tests
 2 - compute LSQ function over a 2D grid
@@ -9,7 +9,7 @@ One parameters is expected:
 [[file:optimization.f03]]
 * Problems 2 and 3
 #+BEGIN_EXAMPLE
-./main 1
+$ ./main 1
           Method            Vinf              R0       LSQ error
 ----------------------------------------------------------------
              GSS     100.0000000       3.3303781     530.8484105
