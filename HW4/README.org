@@ -1,4 +1,19 @@
+* General notes
+#+BEGIN_EXAMPLE
+./main
+One parameters is expected: 
+1 - run optimization tests
+2 - compute LSQ function over a 2D grid
+#+END_EXAMPLE
 * Problem 1
-* Problem 2
-* Problem 3
+[[file:optimization.f03]]
+* Problems 2 and 3
+#+BEGIN_EXAMPLE
+./main 1
+          Method            Vinf              R0       LSQ error
+----------------------------------------------------------------
+             GSS     100.0000000       3.3303781     530.8484105
+          NEWUOA     110.7799056       4.1643865     425.8798929
+#+END_EXAMPLE
+[[file:output/rot_curve_fits.png]]
 [[file:output/map.png]]
