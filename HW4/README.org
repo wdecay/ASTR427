@@ -49,13 +49,13 @@ identical results.
 ** Comments on the results
 The discrepancy between the original model and the fits can be
 explained by expanding the rotation curve equation to the first order
-in ~r~ as follows: ~v = (vinf/r0)*r~. Based on the figure below, it is
+in ~r~ as follows: ~v ~ (vinf/r0)*r~. Based on the figure below, it is
 easy to see that the overall bias introduced by the Gaussian noise is
 such that the slope (~vinf/r0~) appears to be less steep at low ~r~
 than that in the actual model, so we would expect that the fits will
-have ~vinf/r0 < 100/3~. At higher ~r~ (where ~v~vinf~) the bias is in
-favor of higher ~vinf~. Therefore, if the model is allowed to adjust
-~vinf~, it is reasonable to expect that it will produce ~vinf >
+have ~vinf/r0 < 100/3~. At higher ~r~ (where ~v ~ vinf~) the bias is
+in favor of higher ~vinf~. Therefore, if the model is allowed to
+adjust ~vinf~, it is reasonable to expect that it will produce ~vinf >
 100~. In other words, the biases from the noise should shift the fits
 toward somewhat higher values in both ~r~ and ~vinf~ relative to the
 original model. This is indeed consistent with the results:
