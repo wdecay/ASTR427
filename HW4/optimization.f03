@@ -28,7 +28,7 @@ CONTAINS
   ! up to round-off/tolerance). The caller is expected to choose the
   ! initial bracket such that the minimum is contained within it.  The
   ! algorithm will converge close to either a or c if the function
-  ! behaves linearly or is a constant.
+  ! grows monotonically or is a constant.
   !
   FUNCTION gss(fn, a, c) RESULT(x)
     ! constants
