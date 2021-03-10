@@ -43,14 +43,14 @@ CONTAINS
     b = a + r * (c - a)
     x = b + r * (c - b)
 
-    ! Note: fn(a) and fn(b) are never evaluated.
+    ! Note: fn(a) and fn(c) are never evaluated.
     fb = fn(b)
     fx = fn(x)
 
     DO
        ! "it is hopeless to ask for a bracketing interval of width
        ! less than `tol` times its central value" Press, et al.
-       ! The stopping criterion is the same as in Numberical Recipes,
+       ! The stopping criterion is the same as in Numerical Recipes,
        ! however their tolerance was greater by a factor of 2.
        IF (ABS(c - a) <= tol * (ABS(x) + ABS(b))) THEN
           IF (fx > fb) x = b ! otherwise x is already set
