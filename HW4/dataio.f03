@@ -1,5 +1,9 @@
+! This is indended as a collection of I/O primitives. For now simply a
+! copy of the subroutine from HW1.
+!
 MODULE dataio
   IMPLICIT NONE
+
 CONTAINS
   ! Loads the input data. Reads a two-column text file where the first
   ! line can be a comment starting with #. Allocates memory for a 2D
