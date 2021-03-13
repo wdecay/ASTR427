@@ -17,7 +17,7 @@ CONTAINS
     INTEGER :: niter, i, status
     CHARACTER(200) :: gnuplot_cmd
 
-    niter = INT(tmax / dt)
+    niter = NINT(tmax / dt)
     dx = (xmax - xmin) / n
     dt_over_dx2 = dt/dx**2
 
