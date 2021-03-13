@@ -1,8 +1,8 @@
 PROGRAM diffusion1d
   IMPLICIT NONE
 
-  CALL solve_and_plot(dt = 0.01, output="output/dt_1e-2.txt")
-  CALL solve_and_plot(dt = 0.002, output="output/dt_2e-3.txt")
+  CALL solve_and_plot(dt = 0.01, output="output/dt_0.010.txt")
+  CALL solve_and_plot(dt = 0.002, output="output/dt_0.002.txt")
 
 CONTAINS
 
