@@ -13,8 +13,7 @@ CONTAINS
     REAL, INTENT(in) :: dt
     CHARACTER(*), INTENT(in) :: output
     
-    REAL :: u(0:n)
-    REAL :: dx, dt_over_dx2
+    REAL :: u(0:n), dx, dt_over_dx2
     INTEGER :: niter, i, status
     CHARACTER(200) :: gnuplot_cmd
 
