@@ -24,4 +24,4 @@ set title sprintf("(b) t=%.3f", r1 * dt)
 plot data using ($1/10):3 matrix every :::r1::r1 with linespoints linestyle 2 notitle 
 
 set title sprintf("(c) t=%.3f", r2 * dt)
-plot data using ($1/10):3 matrix every :::r2::r2 with linespoints linestyle 2 title sprintf("t=%.3f", r2 * dt)
+plot data using ($1/10):3 matrix every :::r2::r2 with linespoints linestyle 2 notitle
