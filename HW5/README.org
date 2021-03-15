@@ -1,0 +1,45 @@
+To generate the data files and images in the [[file:output]] directory run
+the following:
+#+BEGIN_EXAMPLE
+$ make
+gfortran -fdefault-real-8 -Wall -O3  -c  main.f03
+gfortran -fdefault-real-8 -Wall -O3  main.o -o main
+
+$ ./main
+dt=0.0100, dt/dx**2=1.00
+  [WARNING] stability criterion violated (dt/dx**2>=0.5)
+> gnuplot -e "data='output/dt_0.010.txt';dt=0.010" ./gnuplot/plot.plt
+  [OK]
+
+
+dt=0.0020, dt/dx**2=0.20
+> gnuplot -e "data='output/dt_0.002.txt';dt=0.002" ./gnuplot/plot.plt
+  [OK]
+#+END_EXAMPLE
+
+The slightly rearranged stability criterion is ~dt/dx**2 <
+1/(alpha*2)~ with ~alpha = 1~ in this case. As can be seen in the
+output above, this stability criterion was violated when the timestep
+was set to ~0.01~. Thus no wonder the corresponding plot shows
+instability in the form of exponentially growing oscillations.
+
+Note the differences in the scale of the vertical axes in the plots
+below.
+
+[[file:output/dt_0.010.png]]
+
+[[file:output/dt_0.002.png]]
+
+#+BEGIN_EXAMPLE
+ _______ _                 _                        _ 
+|__   __| |               | |                      | |
+   | |  | |__   __ _ _ __ | | __  _   _  ___  _   _| |
+   | |  | '_ \ / _` | '_ \| |/ / | | | |/ _ \| | | | |
+   | |  | | | | (_| | | | |   <  | |_| | (_) | |_| |_|
+   |_|  |_| |_|\__,_|_| |_|_|\_\  \__, |\___/ \__,_(_)
+                                   __/ |              
+                                  |___/               
+
+                      ... for bearing with my learning
+                                Fortran via this class :)
+#+END_EXAMPLE
