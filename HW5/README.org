@@ -23,7 +23,23 @@ output above, this stability criterion was violated when the timestep
 was set to ~0.01~. Thus no wonder the corresponding plot shows
 instability in the form of exponentially growing oscillations.
 
+Note the differences in the scale of the vertical axes in the plots
+below.
+
 [[file:output/dt_0.010.png]]
 
 [[file:output/dt_0.002.png]]
 
+#+BEGIN_EXAMPLE
+ _______ _                 _                        _ 
+|__   __| |               | |                      | |
+   | |  | |__   __ _ _ __ | | __  _   _  ___  _   _| |
+   | |  | '_ \ / _` | '_ \| |/ / | | | |/ _ \| | | | |
+   | |  | | | | (_| | | | |   <  | |_| | (_) | |_| |_|
+   |_|  |_| |_|\__,_|_| |_|_|\_\  \__, |\___/ \__,_(_)
+                                   __/ |              
+                                  |___/               
+
+                      ... for bearing with my learning
+                                Fortran via this class :)
+#+END_EXAMPLE
